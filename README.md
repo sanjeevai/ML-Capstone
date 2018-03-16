@@ -38,10 +38,22 @@ This is the input data with 123 variables and 7593 observations.
 
 Contains explanation of variables in our data. It show what each variable stands for, what is the data type of each variable, etc. The metadata contains information for extra variables also. In order to make it readable, I have highlighted the variables which are in our input data.
 
-- Capstone_proposal.md
+- project.ipynb
+
+This is the file where I did the major part of the project. It contains all the steps of data analysis and model implementation.
+
+- proposal.md
 
 Markdown file of the proposal. Proposal was required to submit before the project to give a practical experience of how technical projects are carried out.
 
-- capstone_proposal.pdf
+- proposal.pdf
 
 pdf export of the proposal's markdown file.
+
+- report.md 
+
+Markdown file of the report. It shows the entire work that I did in this project.
+
+- report.pdf
+
+PDF export of the report's markdown file.
