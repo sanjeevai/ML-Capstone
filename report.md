@@ -32,7 +32,15 @@ Both are continuous variable so this is a regression task. We will train same re
 
 ### Metrics
 
-We will use `r2_score` as the metric for performance of our model. `feature_importances_` method from sklearn will show the importance of each feature in predicting the target variables.
+We will use `r2_score` as the metric for performance of our model. In statistics, the coefficient of determination, denoted R2 or r2 and pronounced "R squared", is the proportion of the variance in the dependent variable that is predictable from the independent variable(s)<sup>[2]</sup>. It provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model<sup>[3][4][5]</sup>.
+
+$$r2 = 1 - RSS/TSS$$
+
+here RSS = sum of squares of difference between actual values(yi) and predicted values(yi^) and TSS = sum of squares of difference between actual values (yi) and mean value (Before applying Regression). So you can imagine TSS representing the best(actual) model, and RSS being in between our best model and the worst absolute mean model in which case we'll get RSS/TSS < 1. If our model is even worse than the worst mean model then in that case RSS > TSS(Since difference between actual observation and mean value < difference predicted value and actual observation)<sup>[6]</sup>.
+
+`r2_score` is a good metric for this problem because this is a regression problem and `r2_score` can provide a clear understanding of a regression model's performance by comparing the predicted value with true value in the simplest way.
+
+In our problem we have 2 target variables, both continuous and scaled using `StandardScaler` function from sklearn. So, `r2_score` is a fit metric for this problem.
 
 ## II. Analysis
 
@@ -511,15 +519,66 @@ Finally we renamed the variables to be user-friendly.
 
 ### Implementation
 
-The evaluation metric for our models was r2 score. We used the following algorithms in this project:
+We have the same training and testing features for all the models. First we have a linear regression model which is our benchmark model. The `r2_score` obtained from this model are:
 
-1. Linear Regression(Benchmark Model)
-2. AdaBoosr Regressor
-3. Decision Tree Regressof
-4. Extra Trees Regressor
-5. Gradient Boosting Regressor
-6. Light GBM
-7. Random Forest Regressor
+$$graduation\ rate  = 0.44$$
+$$retention\ rate  = 0.25$$
+
+Now we will use other regression models.
+
+1. AdaBoost Regressor
+
+`r2_score`s obtained from this model were:
+
+$$graduation\ rate  = -0.04$$
+$$retention\ rate  = -0.07$$
+
+2. Decision Tree Regressor
+
+`r2_score`s obtained from this model were:
+
+$$graduation\ rate  = 0.38$$
+$$retention\ rate  = 0.21$$
+
+3. Extra Trees Regressor
+
+`r2_score`s obtained from this model were:
+
+$$graduation\ rate  = 0.31$$
+$$retention\ rate  = 0.17$$
+
+4. Gradient Boosting Regressor
+
+`r2_score`s obtained from this model were:
+
+$$graduation\ rate  = 0.49$$
+$$retention\ rate  = 0.30$$
+
+After hyperparameter tuning the scores were
+
+$$graduation\ rate  = 0.69$$
+$$retention\ rate  = 0.34$$
+
+5. Light GBM
+
+`r2_score`s obtained from this model were:
+
+$$graduation\ rate  = 0.51$$
+$$retention\ rate  = 0.12$$
+
+After hyperparameter tuning the scores were
+
+$$graduation\ rate  = 0.83$$
+$$retention\ rate  = 0.58$$
+
+6. Random Forest Regressor
+
+`r2_score`s obtained from this model were:
+
+$$graduation\ rate  = 0.33$$
+$$retention\ rate  = 0.17$$
+
+
 
 ### Refinement
 
@@ -529,11 +588,118 @@ The final model which we chose was Light GBM. Initial r2 scores for this model w
 
 Final metrics were 0.83 for graduation rates and 0.57 for retention rates.
 
+Here is the full process for hyperparameter tuning.
+
+For graduation rates:
+
+```python
+from sklearn.model_selection import GridSearchCV
+
+lgb_grad_train = lgb.Dataset(X_train, grad_train)
+lgb_grad_eval = lgb.Dataset(X_test, grad_test, reference=lgb_grad_train)
+
+print('Start training...')
+# train
+gbm = lgb.LGBMRegressor(objective='regression',
+                        num_leaves=31,
+                        learning_rate=0.05,
+                        n_estimators=20)
+gbm.fit(X_train, grad_train,
+        eval_set=[(X_test, grad_test)],
+        eval_metric='l1',
+        early_stopping_rounds=5)
+
+print('Start predicting...')
+# predict
+grad_pred = gbm.predict(X_test, num_iteration=gbm.best_iteration_)
+# eval
+print('The r2_score for graduation rate is:', r2_score(grad_test, grad_pred) ** 0.5)
+
+# feature importances
+print('Feature importances:', list(gbm.feature_importances_))
+
+# other scikit-learn modules
+estimator = lgb.LGBMRegressor(num_leaves=31)
+
+param_grid = {
+    'learning_rate': [0.01, 0.1, 1],
+    'n_estimators': [20, 40]
+}
+
+gbm = GridSearchCV(estimator, param_grid)
+
+gbm.fit(X_train, grad_train)
+
+print('Best parameters found by grid search are:', gbm.best_params_)
+```
+Best parameters found by grid search are: {'learning_rate': 0.1, 'n_estimators': 40}
+
+For retention rates:
+
+```python
+lgb_ret_train = lgb.Dataset(X_train, ret_train)
+lgb_ret_eval = lgb.Dataset(X_test, ret_test, reference=lgb_ret_train)
+
+print('Start training...')
+# train
+gbm = lgb.LGBMRegressor(objective='regression',
+                        num_leaves=31,
+                        learning_rate=0.05,
+                        n_estimators=20)
+gbm.fit(X_train, ret_train,
+        eval_set=[(X_test, ret_test)],
+        eval_metric='l1',
+        early_stopping_rounds=5)
+
+print('Start predicting...')
+# predict
+ret_pred = gbm.predict(X_test, num_iteration=gbm.best_iteration_)
+# eval
+print('The r2_score for retention rate is:', r2_score(ret_test, ret_pred) ** 0.5)
+
+# feature importances
+print('Feature importances:', list(gbm.feature_importances_))
+
+# other scikit-learn modules
+estimator = lgb.LGBMRegressor(num_leaves=31)
+
+param_grid = {
+    'learning_rate': [0.01, 0.1, 1],
+    'n_estimators': [20, 40]
+}
+
+gbm = GridSearchCV(estimator, param_grid)
+
+gbm.fit(X_train, ret_train)
+
+print('Best parameters found by grid search are:', gbm.best_params_)
+```
+
+The best parameters obtained retention rates are: {'learning_rate': 0.1, 'n_estimators': 20}
+
 ## IV. Results
 
 ### Model Evaluation and Validation
 
 The final model was Light GBM. It was chosen for graduation rates only. But, when we applied hyperparameter tuning then it was the best model for retention rates also.
+
+Below are paramters of the final model:
+
+1. `objective='regression'`
+
+This indicates that we ae doing a regression problem.
+
+2. num_leaves=31
+
+It shows number of leaves in one tree
+
+3. learning_rate=0.1
+
+It is the learning rate of model
+
+4. n_estimators=40
+
+It is the number of trees to be used in the forest.
 
 ### Justification
 
@@ -563,3 +729,13 @@ Further improvements can be made if we use hyperparameter tuning on the remainin
 We have not used XGBoost algorithm here. Maybe it can be used in further iteration to improve the results. I did not use XGBoost because I did not know in detail how it works.
 
 If we consider our final solution as the new benchmark then I think better solutions exist because we have obtained r2 scores of 0.83 and 0.58 only. There are good chances of improvement.
+
+## VI References
+
+1. https://www.usnews.com/opinion/articles/2013/08/15/why-big-data-not-moocs-will-revolutionize-education
+
+2. http://stattrek.com/statistics/dictionary.aspx?definition=coefficient_of_determination
+3. Steel, R. G. D.; Torrie, J. H. (1960). Principles and Procedures of Statistics with Special Reference to the Biological Sciences. McGraw Hill.
+4. Glantz, Stanton A.; Slinker, B. K. (1990). Primer of Applied Regression and Analysis of Variance. McGraw-Hill. ISBN 0-07-023407-8.
+5. Draper, N. R.; Smith, H. (1998). Applied Regression Analysis. Wiley-Interscience. ISBN 0-471-17082-8.
+6. https://stackoverflow.com/questions/23309073/how-is-the-r2-value-in-scikit-learn-calculated
