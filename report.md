@@ -14,7 +14,7 @@ Supervised learning is one of the most popular areas of machine learning in whic
 development has already taken place. In this project we are trying to identify the university-level
 factors which predict the presence of a strong retention and graduation rate. As the leader of the
 big data revolution, Google gathers information through clicks on the Internet and uses this
-information to personalize advertising to individual users<sup>[1]</sup>.
+information to personalize advertising to individual users<sup>[1]</sup>. Previously, machine learning has been used in predicting the retention and graduation rates by using data sets of different US colleges. Student data consisted of two types of information: demographic information of student and transcripts<sup>[2]</sup>. In fact, it is believed that 50-60% of students entering US colleges intending to major in a STEM field ultimately either graduate with a non - STEM degree or do not graduate at all<sup>[3]</sup>.
 
 The link to the data source is [here](https://github.com/sanjeevai/ML_Capstone). The name of the file is data.csv.
 Data was collected from [data.gov](https://catalog.data.gov/dataset/college-scorecard), but for ease of access we have downloaded it and pushed it to this GitHub repo.
@@ -32,11 +32,11 @@ Both are continuous variable so this is a regression task. We will train same re
 
 ### Metrics
 
-We will use `r2_score` as the metric for performance of our model. In statistics, the coefficient of determination, denoted R2 or r2 and pronounced "R squared", is the proportion of the variance in the dependent variable that is predictable from the independent variable(s)<sup>[2]</sup>. It provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model<sup>[3][4][5]</sup>.
+We will use `r2_score` as the metric for performance of our model. In statistics, the coefficient of determination, denoted R2 or r2 and pronounced "R squared", is the proportion of the variance in the dependent variable that is predictable from the independent variable(s)<sup>[4]</sup>. It provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model<sup>[5][6][7]</sup>.
 
-$$r2 = 1 - RSS/TSS$$
+r2 = 1 - RSS/TSS
 
-here RSS = sum of squares of difference between actual values(yi) and predicted values(yi^) and TSS = sum of squares of difference between actual values (yi) and mean value (Before applying Regression). So you can imagine TSS representing the best(actual) model, and RSS being in between our best model and the worst absolute mean model in which case we'll get RSS/TSS < 1. If our model is even worse than the worst mean model then in that case RSS > TSS(Since difference between actual observation and mean value < difference predicted value and actual observation)<sup>[6]</sup>.
+here RSS = sum of squares of difference between actual values(yi) and predicted values(yi^) and TSS = sum of squares of difference between actual values (yi) and mean value (Before applying Regression). So you can imagine TSS representing the best(actual) model, and RSS being in between our best model and the worst absolute mean model in which case we'll get RSS/TSS < 1. If our model is even worse than the worst mean model then in that case RSS > TSS(Since difference between actual observation and mean value < difference predicted value and actual observation)<sup>[8]</sup>.
 
 `r2_score` is a good metric for this problem because this is a regression problem and `r2_score` can provide a clear understanding of a regression model's performance by comparing the predicted value with true value in the simplest way.
 
@@ -422,15 +422,17 @@ So there are 2 response variables:
 1. **rate_suppressed.four_year**: This follows a normal distribution.
 2. **retention_rate.four_year.full_time**: This follow a left skewed distribution.
 
+### Exploratory visualization
+
 ### Algorithms and Techniques
 
 We have one benchmark model and 5 other supervised regression models. Below is the explanation of each model:
 
-1. Linear Regression(Benchmark Model)
+1. Decision Trees(Benchmark Model)
 
 After data preprocessing, we train the input data and the evaluation metric from this model was considered as the benchmark.
 
-A simple linear regression uses only one independent variable, and it describes the relationship between the independent variable and dependent variable(s) as a straight line.
+A decision tree is a flow-chart-like structure, where each internal (non-leaf) node denotes a test on an attribute, each branch represents the outcome of a test, and each leaf (or terminal) node holds a class label<sup>[9]</sup>.
 
 Here we have 2 dependent variable so we train our model 2 times.
 
@@ -438,11 +440,7 @@ Here we have 2 dependent variable so we train our model 2 times.
 
 AdaBoost, short for Adaptive Boosting, is a machine learning algorithm formulated by Yoav Freund and Robert Schapire, who won the 2003 Gödel Prize for their work. AdaBoost is sensitive to noisy data and outliers. The individual learners can be weak, but as long as the performance of each one is slightly better than random guessing, the final model can be proven to converge to a strong learner.
 
-3. Decision Tree Regressor
-
-Decision tree builds regression or classification models in the form of a tree structure. It brakes down a dataset into smaller and smaller subsets while at the same time an associated decision tree is incrementally developed. The final result is a tree with decision nodes and leaf nodes.
-
-4. Extra Trees Regressor
+3. Extra Trees Regressor
 
 With respect to random forests, the method drops the idea of using bootstrap copies of the learning sample, and instead of trying to find an optimal cut-point for each one of the K randomly chosen features at each node, it selects a cut-point at random.
 
@@ -460,7 +458,7 @@ Random forests or random decision forests are an ensemble learning method for cl
 
 ### Benchmark
 
-We will consider benchmark model as the initial linear regressor. We will get the `r2_score` from this model. Then we will use other regression models to improve our score.
+We will consider benchmark model as the decision tree regressor. We will get the `r2_score` from this model. Then we will use other regression models to improve our score.
 
 ## III. Methodology
 
@@ -582,7 +580,7 @@ $$retention\ rate  = 0.17$$
 
 ### Refinement
 
-Our benchmark model was linear regressor. For this model, `r2_score` for graduation rate was 0.44 and for retention rate was 0.25.
+Our benchmark model was decision tree regressor. For this model, `r2_score` for graduation rate was 0.38 and for retention rate was 0.21.
 
 The final model which we chose was Light GBM. Initial r2 scores for this model were 0.51 for graduation rates and 0.12 for retention rates. We applied hyperparameter tuning by using `num_iteration=gbm.best_iteration_` for the model. Here `gbm` is our regressor model.
 
@@ -632,6 +630,7 @@ gbm.fit(X_train, grad_train)
 
 print('Best parameters found by grid search are:', gbm.best_params_)
 ```
+
 Best parameters found by grid search are: {'learning_rate': 0.1, 'n_estimators': 40}
 
 For retention rates:
@@ -714,6 +713,8 @@ We do not expect a very high r2 score because our aim is not to get a very good 
 
 ## V. Conclusion
 
+### Free-Form visualization
+
 ### Reflection
 
 We had 7593 observations and 123 variables. The toughest part was feature selection. We have used domain knowledge to remove features which we think are important or are not university level factor.
@@ -733,9 +734,11 @@ If we consider our final solution as the new benchmark then I think better solut
 ## VI References
 
 1. https://www.usnews.com/opinion/articles/2013/08/15/why-big-data-not-moocs-will-revolutionize-education
-
-2. http://stattrek.com/statistics/dictionary.aspx?definition=coefficient_of_determination
-3. Steel, R. G. D.; Torrie, J. H. (1960). Principles and Procedures of Statistics with Special Reference to the Biological Sciences. McGraw Hill.
-4. Glantz, Stanton A.; Slinker, B. K. (1990). Primer of Applied Regression and Analysis of Variance. McGraw-Hill. ISBN 0-07-023407-8.
-5. Draper, N. R.; Smith, H. (1998). Applied Regression Analysis. Wiley-Interscience. ISBN 0-471-17082-8.
-6. https://stackoverflow.com/questions/23309073/how-is-the-r2-value-in-scikit-learn-calculated
+2. https://arxiv.org/pdf/1606.06364.pdf
+3. https://arxiv.org/pdf/1708.09344.pdf
+4. http://stattrek.com/statistics/dictionary.aspx?definition=coefficient_of_determination
+5. Steel, R. G. D.; Torrie, J. H. (1960). Principles and Procedures of Statistics with Special Reference to the Biological Sciences. McGraw Hill.
+6. Glantz, Stanton A.; Slinker, B. K. (1990). Primer of Applied Regression and Analysis of Variance. McGraw-Hill. ISBN 0-07-023407-8.
+7. Draper, N. R.; Smith, H. (1998). Applied Regression Analysis. Wiley-Interscience. ISBN 0-471-17082-8.
+8. https://stackoverflow.com/questions/23309073/how-is-the-r2-value-in-scikit-learn-calculated
+9. https://en.wikipedia.org/wiki/Decision_tree_learning
