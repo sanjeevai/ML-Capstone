@@ -14,7 +14,7 @@ Supervised learning is one of the most popular areas of machine learning in whic
 development has already taken place. In this project we are trying to identify the university-level
 factors which predict the presence of a strong retention and graduation rate. As the leader of the
 big data revolution, Google gathers information through clicks on the Internet and uses this
-information to personalize advertising to individual users<sup>[1]</sup>. Previously, machine learning has been used in predicting the retention and graduation rates by using data sets of different US colleges. Student data consisted of two types of information: demographic information of student and transcripts<sup>[2]</sup>. In fact, it is believed that 50-60% of students entering US colleges intending to major in a STEM field ultimately either graduate with a non - STEM degree or do not graduate at all<sup>[3]</sup>.
+information to personalize advertising to individual users<sup>[1]</sup>. Previously, machine learning has been ued in predicting the retention and graduation rates by using data sets of different US colleges. Student data consisted of two types of information: demographic information of student and transcripts<sup>[2]</sup>. In fact, it is believed that 50-60% of students entering US colleges intending to major in a STEM field ultimately either graduate with a non - STEM degree or do not graduate at all<sup>[3]</sup>.
 
 The link to the data source is [here](https://github.com/sanjeevai/ML_Capstone). The name of the file is data.csv.
 Data was collected from [data.gov](https://catalog.data.gov/dataset/college-scorecard), but for ease of access we have downloaded it and pushed it to this GitHub repo.
@@ -517,10 +517,10 @@ Finally we renamed the variables to be user-friendly.
 
 ### Implementation
 
-We have the same training and testing features for all the models. First we have a linear regression model which is our benchmark model. The `r2_score` obtained from this model are:
+We have the same training and testing features for all the models. First we have a decision tree regressor which is our benchmark model. The `r2_score` obtained from this model are:
 
-$$graduation\ rate  = 0.44$$
-$$retention\ rate  = 0.25$$
+$$graduation\ rate  = 0.38$$
+$$retention\ rate  = 0.21$$
 
 Now we will use other regression models.
 
@@ -531,21 +531,16 @@ Now we will use other regression models.
 $$graduation\ rate  = -0.04$$
 $$retention\ rate  = -0.07$$
 
-2. Decision Tree Regressor
+I was AdaBoost model should work well because it gives more importance to weaker learners in each iteration. However, it did not happen because AdaBoost work well for binary classification. Here it seem that the model is overfitting.
 
-`r2_score`s obtained from this model were:
-
-$$graduation\ rate  = 0.38$$
-$$retention\ rate  = 0.21$$
-
-3. Extra Trees Regressor
+2. Extra Trees Regressor
 
 `r2_score`s obtained from this model were:
 
 $$graduation\ rate  = 0.31$$
 $$retention\ rate  = 0.17$$
 
-4. Gradient Boosting Regressor
+3. Gradient Boosting Regressor
 
 `r2_score`s obtained from this model were:
 
@@ -557,7 +552,7 @@ After hyperparameter tuning the scores were
 $$graduation\ rate  = 0.69$$
 $$retention\ rate  = 0.34$$
 
-5. Light GBM
+4. Light GBM
 
 `r2_score`s obtained from this model were:
 
@@ -569,7 +564,7 @@ After hyperparameter tuning the scores were
 $$graduation\ rate  = 0.83$$
 $$retention\ rate  = 0.58$$
 
-6. Random Forest Regressor
+5. Random Forest Regressor
 
 `r2_score`s obtained from this model were:
 
