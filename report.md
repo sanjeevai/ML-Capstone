@@ -422,6 +422,15 @@ So there are 2 response variables:
 1. **rate_suppressed.four_year**: This follows a normal distribution.
 2. **retention_rate.four_year.full_time**: This follow a left skewed distribution.
 
+Some helpful insights which helped in feature selection:
+
+1. There were 3 columns which have which could be used as identifiers. One of them had 1994 duplicates. We decided to choose one of them as our unique indicator.
+
+2. There were two types of null values in our date. One was missing value and other was "Privacy Suppressed".
+
+3. For SAT and ACT scores we had 25 percentile, 75 percentile and mid-point values. Since all of them had same type of distribution, we decided to keep the mid-point values and remove the other percentiles.
+
+
 ### Exploratory visualization
 
 ### Algorithms and Techniques
@@ -519,8 +528,9 @@ Finally we renamed the variables to be user-friendly.
 
 We have the same training and testing features for all the models. First we have a decision tree regressor which is our benchmark model. The `r2_score` obtained from this model are:
 
-$$graduation\ rate  = 0.38$$
-$$retention\ rate  = 0.21$$
+graduation rate  = 0.38
+
+retention rate  = 0.21
 
 Now we will use other regression models.
 
@@ -528,50 +538,54 @@ Now we will use other regression models.
 
 `r2_score`s obtained from this model were:
 
-$$graduation\ rate  = -0.04$$
-$$retention\ rate  = -0.07$$
+graduation rate  = -0.04
 
-I was AdaBoost model should work well because it gives more importance to weaker learners in each iteration. However, it did not happen because AdaBoost work well for binary classification. Here it seem that the model is overfitting.
+retention rate  = -0.07
+
+I was expecting AdaBoost model should work well because it gives more importance to weaker learners in each iteration. However, it did not happen because AdaBoost work well for binary classification. Here it seems that the model is overfitting.
 
 2. Extra Trees Regressor
 
 `r2_score`s obtained from this model were:
 
-$$graduation\ rate  = 0.31$$
-$$retention\ rate  = 0.17$$
+graduation rate  = 0.31
+
+retention rate  = 0.17
 
 3. Gradient Boosting Regressor
 
 `r2_score`s obtained from this model were:
 
-$$graduation\ rate  = 0.49$$
-$$retention\ rate  = 0.30$$
+graduation rate  = 0.49
+retention rate  = 0.30
 
 After hyperparameter tuning the scores were
 
-$$graduation\ rate  = 0.69$$
-$$retention\ rate  = 0.34$$
+graduation rate  = 0.69
+
+retention rate  = 0.34
 
 4. Light GBM
 
 `r2_score`s obtained from this model were:
 
-$$graduation\ rate  = 0.51$$
-$$retention\ rate  = 0.12$$
+graduation rate  = 0.51
+
+retention rate  = 0.12
 
 After hyperparameter tuning the scores were
 
-$$graduation\ rate  = 0.83$$
-$$retention\ rate  = 0.58$$
+graduation rate  = 0.83
+
+retention rate  = 0.58
 
 5. Random Forest Regressor
 
 `r2_score`s obtained from this model were:
 
-$$graduation\ rate  = 0.33$$
-$$retention\ rate  = 0.17$$
+graduation rate  = 0.33
 
-
+retention rate  = 0.17
 
 ### Refinement
 
@@ -677,7 +691,7 @@ The best parameters obtained retention rates are: {'learning_rate': 0.1, 'n_esti
 
 The final model was Light GBM. It was chosen for graduation rates only. But, when we applied hyperparameter tuning then it was the best model for retention rates also.
 
-Below are paramters of the final model:
+Below are parameters of the final model:
 
 1. `objective='regression'`
 
@@ -694,6 +708,20 @@ It is the learning rate of model
 4. n_estimators=40
 
 It is the number of trees to be used in the forest.
+
+So why we choose Light GBM as our final model?
+
+Some advantages of Light GBM over other models are:
+
+1. **Faster training speed andhigher efficiency:**  Light GBM use histogram based algorithm i.e it buckets continuous feature values into discrete bins which fasten the training procedure.
+
+2. **Lower memory usage:** Replaces continuous values to discrete bins which result in lower memory usage.
+
+3. **Better accuracy than any other boosting algorithm:** It produces much more complex trees by following leaf wise split approach rather than a level-wise approach which is the main factor in achieving higher accuracy. However, it can sometimes lead to overfitting which can be avoided by setting the max_depth parameter<sup>[10]</sup>.
+
+4. **Compatibility with Large Datasets:** It is capable of performing equally good with large datasets with a significant reduction in training time as compared to XGBOOST<sup>[10]</sup>.
+
+5. **Parallel learning supported.**
 
 ### Justification
 
@@ -737,3 +765,4 @@ If we consider our final solution as the new benchmark then I think better solut
 7. Draper, N. R.; Smith, H. (1998). Applied Regression Analysis. Wiley-Interscience. ISBN 0-471-17082-8.
 8. https://stackoverflow.com/questions/23309073/how-is-the-r2-value-in-scikit-learn-calculated
 9. https://en.wikipedia.org/wiki/Decision_tree_learning
+10. https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/
