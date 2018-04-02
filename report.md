@@ -424,9 +424,9 @@ So there are 2 response variables:
 
 Some helpful insights which helped in feature selection:
 
-1. There were 3 columns which have which could be used as identifiers. One of them had 1994 duplicates. We decided to choose one of them as our unique indicator.
+1. There were 3 columns which have which could be used as identifiers. One of them had 1994 duplicates. We decided to choose one of them as our unique identifier.
 
-2. There were two types of null values in our date. One was missing value and other was "Privacy Suppressed".
+2. There were two types of null values in our data. One was missing value and other was "Privacy Suppressed".
 
 3. For SAT and ACT scores we had 25 percentile, 75 percentile and mid-point values. Since all of them had same type of distribution, we decided to keep the mid-point values and remove the other percentiles.
 
