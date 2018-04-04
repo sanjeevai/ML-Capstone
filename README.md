@@ -36,7 +36,7 @@ This is the input data with 123 variables and 7593 observations.
 
 - metadata.xlsx
 
-Contains explanation of variables in our data. It show what each variable stands for, what is the data type of each variable, etc. The metadata contains information for extra variables also. In order to make it readable, I have highlighted the variables which are in our input data.
+Contains explanation of variables in our data. It show what each variable stands for, what is the data type of each variable, etc. The metadata contains information for extra variables also. In order to make it readable, I have highlighted the variables which are used in our input data.
 
 - project.ipynb
 
