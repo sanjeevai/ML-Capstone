@@ -426,13 +426,21 @@ Some helpful insights which helped in feature selection:
 
 1. There were 3 columns which have which could be used as identifiers. One of them had 1994 duplicates. We decided to choose one of them as our unique identifier.
 
+![Alt Text](img/id.jpg)
+
 2. There were two types of null values in our data. One was missing value and other was "Privacy Suppressed".
 
-3. For SAT and ACT scores we had 25 percentile, 75 percentile and mid-point values. Since all of them had same type of distribution, we decided to keep the mid-point values and remove the other percentiles.
+3. For SAT and ACT scores we had 25 percentile, 75 percentile and mid-point values. Since all of them had same type of distribution, we decided to keep the mid-point values and remove the other percentiles to reduce the number of outliers. We could have removed mid-point values also, but then we would not be able to consider students' transcripts as a factor.
+![Alt Text](img/sat.png)
+![Alt Text](img/act.png)
 
 
 ### Exploratory visualization
 
+Distribution of class labels showed some interesting results. This is the distribution of the class variables before applying feature scaling:
+![Alt Text](img/class_labels.png)
+
+There are outliers at 0.0 in distribution of retention rates. 53 observations have such value. We have to keep these observation because this is not an outlier, 
 ### Algorithms and Techniques
 
 We have one benchmark model and 5 other supervised regression models. Below is the explanation of each model:
@@ -766,3 +774,4 @@ If we consider our final solution as the new benchmark then I think better solut
 8. https://stackoverflow.com/questions/23309073/how-is-the-r2-value-in-scikit-learn-calculated
 9. https://en.wikipedia.org/wiki/Decision_tree_learning
 10. https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/
+
