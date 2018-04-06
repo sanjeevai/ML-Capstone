@@ -14,10 +14,10 @@ Supervised learning is one of the most popular areas of machine learning in whic
 development has already taken place. In this project we are trying to identify the university-level
 factors which predict the presence of a strong retention and graduation rate. As the leader of the
 big data revolution, Google gathers information through clicks on the Internet and uses this
-information to personalize advertising to individual users<sup>[1]</sup>. Previously, machine learning has been ued in predicting the retention and graduation rates by using data sets of different US colleges. Student data consisted of two types of information: demographic information of student and transcripts<sup>[2]</sup>. In fact, it is believed that 50-60% of students entering US colleges intending to major in a STEM field ultimately either graduate with a non - STEM degree or do not graduate at all<sup>[3]</sup>.
+information to personalize advertising to individual users<sup>[1]</sup>. Previously, machine learning has been used in predicting the retention and graduation rates by using data sets of different US colleges. Student data consisted of two types of information: demographic information of student and transcripts<sup>[2]</sup>. In fact, it is believed that 50-60% of students entering US colleges intending to major in a STEM field ultimately either graduate with a non - STEM degree or do not graduate at all<sup>[3]</sup>.
 
 The link to the data source is [here](https://github.com/sanjeevai/ML_Capstone). The name of the file is data.csv.
-Data was collected from [data.gov](https://catalog.data.gov/dataset/college-scorecard), but for ease of access we have downloaded it and pushed it to this GitHub repo.
+Data was collected from [data.gov](https://catalog.data.gov/dataset/college-scorecard), but for ease of access we have downloaded it and pushed it to this repository.
 
 ### Problem Statement
 
@@ -28,7 +28,7 @@ We have two target variables:
 1. Graduation rate, and
 2. Retention rate
 
-Both are continuous variable so this is a regression task. We will train same regression models for both target variables but the final model will be chosen based on the `r2_score`. It may be the case that one model works good for graduation rate and some other works good for retention rate.
+Both are continuous variable so this is a regression task. We will train same regression models for both target variables but the final model will be chosen based on the `r2_score`. It may be the case that one model performs better for graduation rate and another for retention rate.
 
 ### Metrics
 
@@ -50,7 +50,7 @@ Name of the input data file is data.csv. It has 7593 observations and 123 variab
 
 Information about all the variables can be seen in metadata.xlsx file. Let us discuss the variable in our input data.
 
-Features:
+Features(123):
 
 **UNITID**: Unit ID for institution
 
@@ -424,13 +424,13 @@ So there are 2 response variables:
 
 Some helpful insights which helped in feature selection:
 
-1. There were 3 columns which have which could be used as identifiers. One of them had 1994 duplicates. We decided to choose one of them as our unique identifier.
+1. There were 3 columns which have which could be used as identifiers. One of them(`OPEID6`) had 1994 duplicates. We decided to choose one of them as our unique identifier.
 
 ![Alt Text](img/id.jpg)
 
-2. There were two types of null values in our data. One was missing value and other was "Privacy Suppressed".
+2. There were two types of null values in our data. One was _NaN_ and other was "Privacy Suppressed".
 
-3. For SAT and ACT scores we had 25 percentile, 75 percentile and mid-point values. Since all of them had same type of distribution, we decided to keep the mid-point values and remove the other percentiles to reduce the number of outliers. We could have removed mid-point values also, but then we would not be able to consider students' transcripts as a factor.
+3. For SAT and ACT scores we had 25 percentile, 75 percentile and mid-point values. Since all of them had same type of distribution, we decided to keep the mid-point values and remove the other percentiles to reduce the number of outliers. We could have removed mid-point values also, but then it would be unable to consider students' transcripts as a factor.
 ![Alt Text](img/sat.png)
 ![Alt Text](img/act.png)
 
