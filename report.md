@@ -440,7 +440,8 @@ Some helpful insights which helped in feature selection:
 Distribution of class labels showed some interesting results. This is the distribution of the class variables before applying feature scaling:
 ![Alt Text](img/class_labels.png)
 
-There are outliers at 0.0 in distribution of retention rates. 53 observations have such value. We have to keep these observation because this is not an outlier, 
+There are outliers at 0.0 in distribution of retention rates. 53 observations have such value. We have to remove these entries because no U.S. college has zero retention rate. On an average retention rate is 71%<sup>[9]</sup>. This information can be concluded from the distribution of retention rate.
+
 ### Algorithms and Techniques
 
 We have one benchmark model and 5 other supervised regression models. Below is the explanation of each model:
@@ -449,7 +450,7 @@ We have one benchmark model and 5 other supervised regression models. Below is t
 
 After data preprocessing, we train the input data and the evaluation metric from this model was considered as the benchmark.
 
-A decision tree is a flow-chart-like structure, where each internal (non-leaf) node denotes a test on an attribute, each branch represents the outcome of a test, and each leaf (or terminal) node holds a class label<sup>[9]</sup>.
+A decision tree is a flow-chart-like structure, where each internal (non-leaf) node denotes a test on an attribute, each branch represents the outcome of a test, and each leaf (or terminal) node holds a class label<sup>[10]</sup>.
 
 Here we have 2 dependent variable so we train our model 2 times.
 
@@ -536,9 +537,9 @@ Finally we renamed the variables to be user-friendly.
 
 We have the same training and testing features for all the models. First we have a decision tree regressor which is our benchmark model. The `r2_score` obtained from this model are:
 
-graduation rate  = 0.38
+graduation rate  = 0.31
 
-retention rate  = 0.21
+retention rate  = 0.20
 
 Now we will use other regression models.
 
@@ -546,9 +547,9 @@ Now we will use other regression models.
 
 `r2_score`s obtained from this model were:
 
-graduation rate  = -0.04
+graduation rate  = 0.14
 
-retention rate  = -0.07
+retention rate  = 0.15
 
 I was expecting AdaBoost model should work well because it gives more importance to weaker learners in each iteration. However, it did not happen because AdaBoost work well for binary classification. Here it seems that the model is overfitting.
 
@@ -558,48 +559,48 @@ I was expecting AdaBoost model should work well because it gives more importance
 
 graduation rate  = 0.31
 
-retention rate  = 0.17
+retention rate  = 0.20
 
 3. Gradient Boosting Regressor
 
 `r2_score`s obtained from this model were:
 
-graduation rate  = 0.49
-retention rate  = 0.30
+graduation rate  = 0.46
+retention rate  = 0.36
 
 After hyperparameter tuning the scores were
 
-graduation rate  = 0.69
+graduation rate  = 0.45
 
-retention rate  = 0.34
+retention rate  = 0.47
 
 4. Light GBM
 
 `r2_score`s obtained from this model were:
 
-graduation rate  = 0.51
+graduation rate  = 0.47
 
-retention rate  = 0.12
+retention rate  = 0.21
 
 After hyperparameter tuning the scores were
 
-graduation rate  = 0.83
+graduation rate  = 0.81
 
-retention rate  = 0.58
+retention rate  = 0.66
 
 5. Random Forest Regressor
 
 `r2_score`s obtained from this model were:
 
-graduation rate  = 0.33
+graduation rate  = 0.31
 
-retention rate  = 0.17
+retention rate  = 0.20
 
 ### Refinement
 
-Our benchmark model was decision tree regressor. For this model, `r2_score` for graduation rate was 0.38 and for retention rate was 0.21.
+Our benchmark model was decision tree regressor. For this model, `r2_score` for graduation rate was 0.31 and for retention rate was 0.20.
 
-The final model which we chose was Light GBM. Initial r2 scores for this model were 0.51 for graduation rates and 0.12 for retention rates. We applied hyperparameter tuning by using `num_iteration=gbm.best_iteration_` for the model. Here `gbm` is our regressor model.
+The final model which we chose was Light GBM. Initial r2 scores for this model were 0.81 for graduation rates and 0.66 for retention rates. We applied hyperparameter tuning by using `num_iteration=gbm.best_iteration_` for the model. Here `gbm` is our regressor model.
 
 Final metrics were 0.83 for graduation rates and 0.57 for retention rates.
 
@@ -697,11 +698,11 @@ The best parameters obtained retention rates are: {'learning_rate': 0.1, 'n_esti
 
 ### Model Evaluation and Validation
 
-The final model was Light GBM. It was chosen for graduation rates only. But, when we applied hyperparameter tuning then it was the best model for retention rates also.
+The final model was Light GBM. It was chosen for graduation rates only. But, when we applied hyperparameter tuning then it was proved to be the best model for retention rates also.
 
 Below are parameters of the final model:
 
-1. `objective='regression'`
+1. objective='regression'
 
 This indicates that we ae doing a regression problem.
 
@@ -725,53 +726,65 @@ Some advantages of Light GBM over other models are:
 
 2. **Lower memory usage:** Replaces continuous values to discrete bins which result in lower memory usage.
 
-3. **Better accuracy than any other boosting algorithm:** It produces much more complex trees by following leaf wise split approach rather than a level-wise approach which is the main factor in achieving higher accuracy. However, it can sometimes lead to overfitting which can be avoided by setting the max_depth parameter<sup>[10]</sup>.
+3. **Better accuracy than any other boosting algorithm:** It produces much more complex trees by following leaf wise split approach rather than a level-wise approach which is the main factor in achieving higher accuracy. However, it can sometimes lead to overfitting which can be avoided by setting the max_depth parameter<sup>[11]</sup>.
 
-4. **Compatibility with Large Datasets:** It is capable of performing equally good with large datasets with a significant reduction in training time as compared to XGBOOST<sup>[10]</sup>.
+4. **Compatibility with Large Datasets:** It is capable of performing equally good with large datasets with a significant reduction in training time as compared to XGBOOST<sup>[11]</sup>.
 
 5. **Parallel learning supported.**
 
 ### Justification
 
-Below is a comparing of our final model of our final model and the benchmark model showing r2 score for prediction of graduation and retention rates.
+Below is a comparision of performance of our final model and the benchmark model showing `r2_score`s for graduation and retention rates.
 
 |Model|graduation rates|retention rates |
 |------|------|------|
-|Linear Regression(Benchmark model)|0.44|0.25|
-|Light GBM(Final model)|0.83|0.58|
+|Decision Tree Regressor(Benchmark model)|0.31|0.20|
+|Light GBM(Final model)|0.81|0.66|
 
-We do not expect a very high r2 score because our aim is not to get a very good prediction. Our aim is to see the important features. So, it will be same when we have best model, whatever high be the r2 score.
+We have achieved good results in comparison to benchmark model. Now we will use `feature_importances` to see most relevant features.
 
 ## V. Conclusion
 
 ### Free-Form visualization
 
+Let us see the distribution of top 5 features affecting graduation and retention rates both:
+
 ### Reflection
 
-We had 7593 observations and 123 variables. The toughest part was feature selection. We have used domain knowledge to remove features which we think are important or are not university level factor.
+We had 7593 observations and 123 variables. The toughest part was feature selection. We have used domain knowledge to remove features which we think are less important or are not university level factor.
 
 One interesting aspect was that we had multiple target labels and we have to narrow down by applying certain conditions, like doing the problem for first-time full-time 4-year institutions.
 
-My initial and final model can be used for this problem in general because they provide a good result of the important university level factors affecting education.
-
+My final model can be used for analysis important features affecting graduation rates as it has r2 score of 0.8. For retention rates, further improvement can be made as I could get r2 score of 0.6 after hyperparameter tuning
 ### Improvement
 
-Further improvements can be made if we use hyperparameter tuning on the remaining models. Maybe they will give results than our final model.
+Further improvements can be made if we use hyperparameter tuning on the remaining models also. Maybe they will give better results than our final model.
 
-We have not used XGBoost algorithm here. Maybe it can be used in further iteration to improve the results. I did not use XGBoost because I did not know in detail how it works.
+We have not used XGBoost algorithm here. Maybe it can be used in further iteration to improve the results. I did not use XGBoost because I did not know in detail about its working.
 
-If we consider our final solution as the new benchmark then I think better solutions exist because we have obtained r2 scores of 0.83 and 0.58 only. There are good chances of improvement.
+If we consider our final solution as the new benchmark then I think better solutions exist because we have obtained r2 scores of 0.8 and 0.6 only. Atleast r2 scores can be improved significantly.
 
 ## VI References
 
 1. https://www.usnews.com/opinion/articles/2013/08/15/why-big-data-not-moocs-will-revolutionize-education
+
 2. https://arxiv.org/pdf/1606.06364.pdf
+
 3. https://arxiv.org/pdf/1708.09344.pdf
+
 4. http://stattrek.com/statistics/dictionary.aspx?definition=coefficient_of_determination
+
 5. Steel, R. G. D.; Torrie, J. H. (1960). Principles and Procedures of Statistics with Special Reference to the Biological Sciences. McGraw Hill.
+
 6. Glantz, Stanton A.; Slinker, B. K. (1990). Primer of Applied Regression and Analysis of Variance. McGraw-Hill. ISBN 0-07-023407-8.
+
 7. Draper, N. R.; Smith, H. (1998). Applied Regression Analysis. Wiley-Interscience. ISBN 0-471-17082-8.
+
 8. https://stackoverflow.com/questions/23309073/how-is-the-r2-value-in-scikit-learn-calculated
-9. https://en.wikipedia.org/wiki/Decision_tree_learning
-10. https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/
+
+9. https://www.collegefactual.com/colleges/united-states-university/academic-life/graduation-and-retention/
+
+10. https://en.wikipedia.org/wiki/Decision_tree_learning
+
+11. https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/
 
