@@ -704,7 +704,7 @@ Below are parameters of the final model:
 
 1. objective='regression'
 
-This indicates that we ae doing a regression problem.
+This indicates that we are doing a regression problem.
 
 2. num_leaves=31
 
@@ -747,8 +747,27 @@ We have achieved good results in comparison to benchmark model. Now we will use 
 
 ### Free-Form visualization
 
-Let us see the distribution of top 5 features affecting graduation and retention rates both:
+Let us see the relationship between the important features and target variables. Out of top 10 features for each target variable prediction, 8 were common. This helped me in analyzing the important factors in one go. Below are some scatterplots showing relationship between targets and important features:
 
+- Financial criteria
+
+4 out of 8 features were like financial aids, grants, debts, etc.
+
+Below are some plots that give us an idea of how inability to pay debts causes dropping out of college.
+
+![Alt Text](img/grad_price.png)
+
+![Alt Text](img/ret_price.png)
+
+Not a strong correlation but still we can see how rapidly graduation and retention rates change with education fees.
+
+- Academics
+
+![Alt Text](img/grad_sat.png)
+
+![Alt Text](img/ret_sat.png)
+
+Very strong correlation. This result was expected because present academic performance decides whether you continue your studies further or not.
 
 ### Reflection
 
@@ -789,3 +808,7 @@ If we consider our final solution as the new benchmark then I think better solut
 
 11. https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/
 
+![Alt Text](img/ret_price.png)
+
+
+![Alt Text](img/ret_price.jpg)
