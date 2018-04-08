@@ -4,7 +4,7 @@
 
 Sanjeev Yadav
 
-17 March 2018
+9 April 2018
 
 ## I. Definition
 
@@ -773,16 +773,17 @@ Very strong correlation. This result was expected because present academic perfo
 
 We had 7593 observations and 123 variables. The toughest part was feature selection. We have used domain knowledge to remove features which we think are less important or are not university level factor.
 
-One interesting aspect was that we had multiple target labels and we have to narrow down by applying certain conditions, like doing the problem for first-time full-time 4-year institutions.
+One interesting aspect was that we had multiple target labels and we have to narrow down by applying certain conditions, like solving the problem for first-time full-time 4-year institutions.
 
-My final model can be used for analysis important features affecting graduation rates as it has r2 score of 0.8. For retention rates, further improvement can be made as I could get r2 score of 0.6 after hyperparameter tuning
+My final model can be used for analyzing important features affecting graduation rates as it has a decent r2 score of 0.8. For retention rates, further improvement can be made as I could get r2 score of 0.6 after hyperparameter tuning.
+
 ### Improvement
 
 Further improvements can be made if we use hyperparameter tuning on the remaining models also. Maybe they will give better results than our final model.
 
 We have not used XGBoost algorithm here. Maybe it can be used in further iteration to improve the results. I did not use XGBoost because I did not know in detail about its working.
 
-If we consider our final solution as the new benchmark then I think better solutions exist because we have obtained r2 scores of 0.8 and 0.6 only. Atleast r2 scores can be improved significantly.
+If we consider our final solution as the new benchmark then I think better solutions exist because we have obtained r2 scores of 0.8 and 0.6 only. Atleast r2 scores for retention rate can be improved significantly.
 
 ## VI References
 
@@ -807,8 +808,3 @@ If we consider our final solution as the new benchmark then I think better solut
 10. https://en.wikipedia.org/wiki/Decision_tree_learning
 
 11. https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/
-
-![Alt Text](img/ret_price.png)
-
-
-![Alt Text](img/ret_price.jpg)
