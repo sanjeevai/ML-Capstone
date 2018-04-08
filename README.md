@@ -48,7 +48,7 @@ Markdown file of the proposal. Proposal was required to submit before the projec
 
 - proposal.pdf
 
-pdf export of the proposal's markdown file.
+PDF export of the proposal's markdown file.
 
 - report.md 
 
