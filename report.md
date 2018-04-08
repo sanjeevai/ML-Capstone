@@ -749,6 +749,7 @@ We have achieved good results in comparison to benchmark model. Now we will use 
 
 Let us see the distribution of top 5 features affecting graduation and retention rates both:
 
+
 ### Reflection
 
 We had 7593 observations and 123 variables. The toughest part was feature selection. We have used domain knowledge to remove features which we think are less important or are not university level factor.
