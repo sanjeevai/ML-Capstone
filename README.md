@@ -6,27 +6,19 @@ In this project I have used supervised learning techniques to find the most rele
 
 ## Problem Statement
 
-In this problem, we will use supervised learning techniques to determine which university level factors are relevant in affecting the graduation and retention rate of students. Variable names for graduation and retention rates are explained below:
+In this problem, we will use supervised learning techniques to determine which university level factors are relevant in affecting the graduation and retention rate in U.S. colleges. Variable names for graduation and retention rates are explained below:
 
-1. For graduation rates:
+- For graduation rates:
 
-    1.1. **C150_4_POOLED_SUPP**
+    **C150_4_POOLED_SUPP**
 
     Completion rate for first-time, full-time students at four-year institutions (150% of expected time to completion) , pooled in two-year rolling averages and suppressed for small n size.
 
-    1.2. **C150_L4_POOLED_SUPP**
+- For retention rates:
 
-    Completion rate for first-time, full-time students at less-than-four-year institutions (150% of expected time to completion) , pooled in two-year rolling averages and suppressed for small n size.
-
-2. For retention rates:
-
-    2.1. **RET_FT4**
+    **RET_FT4**
 
     First-time, full-time student retention rate at four-year institutions.
-
-    2.2. **RET_FTL4**
-
-    First-time, full-time student retention rate at less-than-four-year institutions.
 
 ## Files
 
