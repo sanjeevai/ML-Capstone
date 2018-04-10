@@ -535,15 +535,37 @@ Finally we renamed the variables to be user-friendly.
 
 ### Implementation
 
-We have the same training and testing features for all the models. First we have a decision tree regressor which is our benchmark model. The `r2_score` obtained from this model are:
+We have the same training and testing features for all the models. I wanted to try the fundamental ones first, i.e., decision trees(benchmark model) and random forest and then some ensemble methods. 
+
+Creating benchmark model was quite simple because I could not find any benchmark model in previous works in this field. So I decided to use a simple decision tree as my benchmark model.
+
+```python
+
+from sklearn.tree import DecisionTreeRegressor
+mod = DecisionTreeRegressor(max_depth = 3, random_state = 0)
+
+# model for graduation rates
+mod_grad = mod.fit(X_train, grad_train)
+mod_ret = mod.fit(X_train, ret_train)
+
+# model for retention rates
+grad_pred = mod_grad.predict(X_test)
+ret_pred = mod_ret.predict(X_test)
+```
+
+The metrics obtained from the benchmark model are:
 
 graduation rate  = 0.31
 
 retention rate  = 0.20
 
-Now we will use other regression models.
+Below are the other supervised learners that I used for predictions.
 
 1. AdaBoost Regressor
+
+Here is a snapshot of the model's application.
+
+![Alt Text](img/adaboost.jpg)
 
 `r2_score`s obtained from this model were:
 
@@ -551,9 +573,13 @@ graduation rate  = 0.14
 
 retention rate  = 0.15
 
-I was expecting AdaBoost model should work well because it gives more importance to weaker learners in each iteration. However, it did not happen because AdaBoost work well for binary classification. Here it seems that the model is overfitting.
+I was expecting AdaBoost model to work well because it gives more importance to weaker learners in each iteration. However, it did not happen because Adaboost works well for binary classification. It was initially developed for binary classification.
 
 2. Extra Trees Regressor
+
+Here is a snaphots of the model's application:
+
+![Alt Text](img/etr.jpg)
 
 `r2_score`s obtained from this model were:
 
@@ -561,20 +587,65 @@ graduation rate  = 0.31
 
 retention rate  = 0.20
 
+
+
 3. Gradient Boosting Regressor
+
+Here is a snapshot of the model's application:
+
+![Alt Text](img/gbr.jpg)
 
 `r2_score`s obtained from this model were:
 
 graduation rate  = 0.46
 retention rate  = 0.36
 
-After hyperparameter tuning the scores were
+Prior to performing hyperparameter tuning on any algorithm, this untuned model gave the best result for retention rates. This was one of models which was considered for further refinement.
 
-graduation rate  = 0.45
+Score on retention rate increased by 30% and a slight drop for graduation rates.
 
-retention rate  = 0.47
+On the other hand, score for graduation rate was 0.63 when using large number of estimators. It was a difficult task to decide which GBR model to select for final comparison with Light GBM. So I decided to test the performance of Light GBM first and then make some valid conclusion.
 
 4. Light GBM
+
+```python
+import lightgbm as lgb
+
+# create dataset for lightgbm
+lgb_ret_train = lgb.Dataset(X_train, ret_train)
+lgb_ret_eval = lgb.Dataset(X_test, ret_test, reference=lgb_ret_train)
+lgb_grad_train = lgb.Dataset(X_train, grad_train)
+lgb_grad_eval = lgb.Dataset(X_test, grad_test, reference=lgb_grad_train)
+
+
+
+# specify configurations as a dict
+params = {
+    'task': 'train',
+    'boosting_type': 'gbdt',
+    'objective': 'regression',
+    'metric': {'l2', 'auc'},
+    'num_leaves': 31,
+    'learning_rate': 0.05,
+    'feature_fraction': 0.9,
+    'bagging_fraction': 0.8,
+    'bagging_freq': 5,
+    'verbose': 0,
+}
+
+# train
+gbm_ret = lgb.train(params,
+                lgb_ret_train,
+                num_boost_round=20,
+                valid_sets=lgb_ret_eval,
+                early_stopping_rounds=5)
+
+gbm_grad = lgb.train(params,
+                lgb_grad_train,
+                num_boost_round=20,
+                valid_sets=lgb_grad_eval,
+                early_stopping_rounds=5)
+```
 
 `r2_score`s obtained from this model were:
 
@@ -582,19 +653,31 @@ graduation rate  = 0.47
 
 retention rate  = 0.21
 
-After hyperparameter tuning the scores were
-
-graduation rate  = 0.81
-
-retention rate  = 0.66
+This untuned model provided **best** result for retention rates. This was the second model which was chosen for further refinement.
 
 5. Random Forest Regressor
 
-`r2_score`s obtained from this model were:
+![Alt Text](img/rfr.jpg)
+
+`r2_score`s obtained from this untuned model were:
 
 graduation rate  = 0.31
 
 retention rate  = 0.20
+
+This untuned model provided poor results for both targets.
+
+Here are the most challenging problems I faced in implementation (and prior to it):
+
+- Deciding target variables
+
+
+
+The most challenging part of implementation was deciding which GBR model to consider for final comparison with Light GBM. Hyperparameter tuning decreased the score for graduation rates, whereas `n_estimators` adjustment provided good results for the same. Hyperparameter tuning of Light GBM surpassed the former for both target predictions. 
+
+There was no such problem when training and testing for untuned models. I got unexpected results for AdaBoost Regressor though. I applied the same model in [supervised learning project](https://github.com/sanjeevai/Finding_Donors_For_CharityML) and got good results. Thorough research showed that AdaBoost was initially developed for binary classification and this is a regression task.
+
+
 
 ### Refinement
 
@@ -718,6 +801,12 @@ It is the learning rate of model
 
 It is the number of trees to be used in the forest.
 
+Now let us see the results of our final model:
+
+![Alt Text](img/results.png)
+
+This model shows relatively poor scores for retention rates because of the distribution of retention rates. This model could have performed better if retention rates were more normally distributed.
+
 So why we choose Light GBM as our final model?
 
 Some advantages of Light GBM over other models are:
@@ -768,6 +857,8 @@ Not a strong correlation but still we can see how rapidly graduation and retenti
 ![Alt Text](img/ret_sat.png)
 
 Very strong correlation. This result was expected because present academic performance decides whether you continue your studies further or not.
+
+- Demographics
 
 ### Reflection
 
