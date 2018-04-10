@@ -671,11 +671,15 @@ Here are the most challenging problems I faced in implementation (and prior to i
 
 - Deciding target variables
 
+    For graduation rates we had 2 variables and for retention rates we had 4 variables. We had to apply certain constraints to narrow down the target space.
 
+- GBR model
 
-The most challenging part of implementation was deciding which GBR model to consider for final comparison with Light GBM. Hyperparameter tuning decreased the score for graduation rates, whereas `n_estimators` adjustment provided good results for the same. Hyperparameter tuning of Light GBM surpassed the former for both target predictions. 
+    The most challenging part of implementation was deciding which GBR model to consider for final comparison with Light GBM. Hyperparameter tuning decreased the score for graduation rates, whereas `n_estimators` adjustment provided good results for the same. Hyperparameter tuning of Light GBM surpassed the former for both target predictions. So, I decided to see the results of Light GBM first and then dropped the GBM model.
 
-There was no such problem when training and testing for untuned models. I got unexpected results for AdaBoost Regressor though. I applied the same model in [supervised learning project](https://github.com/sanjeevai/Finding_Donors_For_CharityML) and got good results. Thorough research showed that AdaBoost was initially developed for binary classification and this is a regression task.
+- Expected good score from AdaBoost
+
+I got unexpected results for AdaBoost Regressor. I applied the same model in [supervised learning project](https://github.com/sanjeevai/Finding_Donors_For_CharityML) and got good results. Thorough research showed that AdaBoost was initially developed for binary classification and this is a regression task.
 
 
 
