@@ -20,6 +20,18 @@ In this problem, we will use supervised learning techniques to determine which u
 
     First-time, full-time student retention rate at four-year institutions.
 
+### Metrics
+
+We have used `r2_score` as the metric for performance of our model. In statistics, the coefficient of determination, denoted R2 or r2 and pronounced "R squared", is the proportion of the variance in the dependent variable that is predictable from the independent variable(s)<sup>[4]</sup>. It provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model<sup>[5][6][7]</sup>.
+
+r2 = 1 - RSS/TSS
+
+here RSS = sum of squares of difference between actual values(yi) and predicted values(yi^) and TSS = sum of squares of difference between actual values (yi) and mean value (Before applying Regression). So you can imagine TSS representing the best(actual) model, and RSS being in between our best model and the worst absolute mean model in which case we'll get RSS/TSS < 1. If our model is even worse than the worst mean model then in that case RSS > TSS(Since difference between actual observation and mean value < difference predicted value and actual observation)<sup>[8]</sup>.
+
+`r2_score` is a good metric for this problem because this is a regression problem and `r2_score` can provide a clear understanding of a regression model's performance by comparing the predicted value with true value in the simplest way.
+
+In our problem we have 2 target variables, both continuous and scaled using `StandardScaler` function from sklearn. So, `r2_score` is a fit metric for this problem.
+
 ## Files
 
 - data.csv
@@ -28,7 +40,7 @@ This is the input data with 123 variables and 7593 observations.
 
 - metadata.xlsx
 
-Contains explanation of variables in our data. It show what each variable stands for, what is the data type of each variable, etc. The metadata contains information for extra variables also. In order to make it readable, I have highlighted the variables which are used in our input data.
+Contains explanation of variables in our data. It show what each variable stands for, what is the data type of each variable, etc. The metadata that I obtained from source contains information for extra variables also. In order to make it readable, I have highlighted the variables which are present in our data file.
 
 - project.ipynb
 
@@ -42,9 +54,9 @@ Markdown file of the proposal. Proposal was required to submit before the projec
 
 PDF export of the proposal's markdown file.
 
-- report.md 
+- report.md
 
-Markdown file of the report. It shows the entire work that I did in this project.
+Markdown file of the report. It summarises the entire work that I did in this project.
 
 - report.pdf
 
