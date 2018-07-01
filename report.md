@@ -14,7 +14,7 @@ Supervised learning is one of the most popular areas of machine learning in whic
 development has already taken place. In this project we are trying to identify the university-level
 factors which predict the presence of a strong retention and graduation rate. As the leader of the
 big data revolution, Google gathers information through clicks on the Internet and uses this
-information to personalize advertising to individual users<sup>[1]</sup>. Previously, machine learning has been used in predicting the retention and graduation rates by using data sets of different US colleges. Student data consisted of two types of information: demographic information of student and transcripts<sup>[2]</sup>. In fact, it is believed that 50-60% of students entering US colleges intending to major in a STEM field ultimately either graduate with a non - STEM degree or do not graduate at all<sup>[3]</sup>.
+information to personalize advertising to individual users<sup>[[1]](#ref1)</sup>. Previously, machine learning has been used in predicting the retention and graduation rates by using data sets of different US colleges. Student data consisted of two types of information: demographic information of student and transcripts<sup>[[2]](#ref2)</sup>. In fact, it is believed that 50-60% of students entering US colleges intending to major in a STEM field ultimately either graduate with a non - STEM degree or do not graduate at all<sup>[[3]](#ref3)</sup>.
 
 The link to the data source is [here](https://github.com/sanjeevai/ML_Capstone). The name of the file is data.csv.
 Data was collected from [data.gov](https://catalog.data.gov/dataset/college-scorecard), but for ease of access we have downloaded it and pushed it to this repository.
@@ -32,11 +32,11 @@ Both are continuous variable so this is a regression task. We will train same re
 
 ### Metrics
 
-We will use `r2_score` as the metric for performance of our model. In statistics, the coefficient of determination, denoted R2 or r2 and pronounced "R squared", is the proportion of the variance in the dependent variable that is predictable from the independent variable(s)<sup>[4]</sup>. It provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model<sup>[5][6][7]</sup>.
+We will use `r2_score` as the metric for performance of our model. In statistics, the coefficient of determination, denoted R2 or r2 and pronounced "R squared", is the proportion of the variance in the dependent variable that is predictable from the independent variable(s)<sup>[[4]](#ref4)</sup>. It provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model<sup>[[5]](#ref5)[[6]](#ref6)[[7]](#ref7)</sup>.
 
 r2 = 1 - RSS/TSS
 
-here RSS = sum of squares of difference between actual values(yi) and predicted values(yi^) and TSS = sum of squares of difference between actual values (yi) and mean value (Before applying Regression). So you can imagine TSS representing the best(actual) model, and RSS being in between our best model and the worst absolute mean model in which case we'll get RSS/TSS < 1. If our model is even worse than the worst mean model then in that case RSS > TSS(Since difference between actual observation and mean value < difference predicted value and actual observation)<sup>[8]</sup>.
+here RSS = sum of squares of difference between actual values(yi) and predicted values(yi^) and TSS = sum of squares of difference between actual values (yi) and mean value (Before applying Regression). So you can imagine TSS representing the best(actual) model, and RSS being in between our best model and the worst absolute mean model in which case we'll get RSS/TSS < 1. If our model is even worse than the worst mean model then in that case RSS > TSS(Since difference between actual observation and mean value < difference predicted value and actual observation)<sup>[[8]](#ref8)</sup>.
 
 `r2_score` is a good metric for this problem because this is a regression problem and `r2_score` can provide a clear understanding of a regression model's performance by comparing the predicted value with true value in the simplest way.
 
@@ -387,17 +387,14 @@ Target variables:
 
 1. For graduation rates we have two variables in our data. Let us see the difference between those two:
 
-1.1. **rate_suppressed.four_year**
-
-Completion rate for first-time, full-time students at four-year institutions (150% of expected time to completion) , pooled in two-year rolling averages and suppressed for small n size.
-
-1.2. **rate_suppressed.lt_four_year_150percent**
-
-Completion rate for first-time, full-time students at less-than-four-year institutions (150% of expected time to completion) , pooled in two-year rolling averages and suppressed for small n size
+    1.1. **rate_suppressed.four_year**  
+    Completion rate for first-time, full-time students at four-year institutions (150% of expected time to completion) , pooled in two-year rolling averages and suppressed for small n size.  
+    1.2. **rate_suppressed.lt_four_year_150percent**  
+    Completion rate for first-time, full-time students at less-than-four-year institutions (150% of expected time to completion), pooled in two-year rolling averages and suppressed for small n size
 
 We will be making predictions for 4-year institutions.
 
-2. For retention rates we have four variables in our data. Let us see the difference between them:
+1. For retention rates we have four variables in our data. Let us see the difference between them:
 
 2.1. **retention_rate.four_year.full_time**
 
@@ -426,31 +423,41 @@ Some helpful insights which helped in feature selection:
 
 1. There were 3 columns which have which could be used as identifiers. One of them(`OPEID6`) had 1994 duplicates. We decided to choose one of them as our unique identifier.
 
-![Alt Text](img/id.jpg)
+```python
+for col in ['OPEID', 'OPEID6', 'UNITID']:
+    print("Number of duplicates in {} is {}"\
+          .format(col,df[col].duplicated().sum()))
+```
 
-2. There were two types of null values in our data. One was _NaN_ and other was "Privacy Suppressed".
+    >> Number of duplicates in OPEID is 30
+    >> Number of duplicates in OPEID6 is 1994
+    >> Number of duplicates in UNITID is 0
 
-3. For SAT and ACT scores we had 25 percentile, 75 percentile and mid-point values. Since all of them had same type of distribution, we decided to keep the mid-point values and remove the other percentiles to reduce the number of outliers. We could have removed mid-point values also, but then it would be unable to consider students' transcripts as a factor.
+1. There were two types of null values in our data. One was _NaN_ and other was "Privacy Suppressed".
+
+2. For SAT and ACT scores we had 25 percentile, 75 percentile and mid-point values. Since all of them had same type of distribution, we decided to keep the mid-point values and remove the other percentiles to reduce the number of outliers. We could have removed mid-point values also, but then it would be unable to consider students' transcripts as a factor.
+
 ![Alt Text](img/sat.png)
-![Alt Text](img/act.png)
 
+![Alt Text](img/act.png)
 
 ### Exploratory visualization
 
 Distribution of class labels showed some interesting results. This is the distribution of the class variables before applying feature scaling:
+
 ![Alt Text](img/class_labels.png)
 
-There are outliers at 0.0 in distribution of retention rates. 53 observations have such value. We have to remove these entries because no U.S. college has zero retention rate. On an average retention rate is 71%<sup>[9]</sup>. This information can be concluded from the distribution of retention rate.
+There are outliers at 0.0 in distribution of retention rates. 53 observations have such value. We have to remove these entries because no U.S. college has zero retention rate. On an average retention rate is 71%<sup>[[9]](#ref9)</sup>. This information can be concluded from the distribution of retention rate.
 
 ### Algorithms and Techniques
 
 We have one benchmark model and 5 other supervised regression models. Below is the explanation of each model:
 
-1. Decision Trees(Benchmark Model)
+1. Decision Trees (Benchmark Model)
 
 After data preprocessing, we train the input data and the evaluation metric from this model was considered as the benchmark.
 
-A decision tree is a flow-chart-like structure, where each internal (non-leaf) node denotes a test on an attribute, each branch represents the outcome of a test, and each leaf (or terminal) node holds a class label<sup>[10]</sup>.
+A decision tree is a flow-chart-like structure, where each internal (non-leaf) node denotes a test on an attribute, each branch represents the outcome of a test, and each leaf (or terminal) node holds a class label<sup>[[10]](#ref10)</sup>.
 
 Here we have 2 dependent variable so we train our model 2 times.
 
@@ -563,11 +570,28 @@ Below are the other supervised learners that I used for predictions.
 
 1. AdaBoost Regressor
 
-Here is a snapshot of the model's application.
+Here is a snippet from `project.ipynb` showing the model's application:
 
-![Alt Text](img/adaboost.jpg)
+```python
+# training
+from sklearn.ensemble import AdaBoostRegressor
+mod = AdaBoostRegressor(random_state=0)
 
-`r2_score`s obtained from this model were:
+# predicting
+mod_grad = mod.fit(X_train, grad_train)
+mod_ret = mod.fit(X_train, ret_train)
+grad_pred = mod_grad.predict(X_test)
+ret_pred = mod_ret.predict(X_test)
+
+# evaluating performance
+print("r2_score for graduation rate is: ", r2_score(grad_test, grad_pred))
+print("r2_score for retention rate is: ", r2_score(ret_test, ret_pred))
+```
+
+    >> r2_score for graduation rate is:  0.14279834219048693
+    >> r2_score for retention rate is:  0.14629839470300132
+
+r2_scores obtained from this model were:
 
 graduation rate  = 0.14
 
@@ -577,27 +601,60 @@ I was expecting AdaBoost model to work well because it gives more importance to 
 
 2. Extra Trees Regressor
 
-Here is a snaphots of the model's application:
+Here is a snippet from `project.ipynb` showing its application:
+```python
+# training
+from sklearn.ensemble import ExtraTreesRegressor
+mod = ExtraTreesRegressor(max_depth=2, random_state = 0)
 
-![Alt Text](img/etr.jpg)
+# predicting
+mod_grad = mod.fit(X_train, grad_train)
+mod_ret = mod.fit(X_train, ret_train)
+grad_pred = mod_grad.predict(X_test)
+ret_pred = mod_ret.predict(X_test)
 
-`r2_score`s obtained from this model were:
+# evaluating performance
+print("r2_score for graduation rate is: ", r2_score(grad_test, grad_pred))
+print("r2_score for retention rate is: ", r2_score(ret_test, ret_pred))
+```
+
+    >> r2_score for graduation rate is:  0.30403412161006504
+    >> r2_score for retention rate is:  0.19995674945336428
+
+r2_scores obtained from this model were:
 
 graduation rate  = 0.31
 
 retention rate  = 0.20
 
-
-
 3. Gradient Boosting Regressor
 
-Here is a snapshot of the model's application:
+Here is a snippet from `project.ipynb` showing the model's application:
 
-![Alt Text](img/gbr.jpg)
+```python
+# training
+from sklearn.ensemble import GradientBoostingRegressor
+mod = GradientBoostingRegressor(max_depth = 2, random_state = 0)
 
-`r2_score`s obtained from this model were:
+# predicting
+mod_grad = mod.fit(X_train, grad_train)
+mod_ret = mod.fit(X_train, ret_train)
+grad_pred = mod_grad.predict(X_test)
+ret_pred = mod_ret.predict(X_test)
+
+# evaluating performance
+print("r2_score for graduation rate is: ", r2_score(grad_test, grad_pred))
+print("r2_score for retention rate is: ", r2_score(ret_test, ret_pred))
+
+```
+
+    >> r2_score for graduation rate is:  0.4647416126059296
+    >> r2_score for retention rate is:  0.35969042288064146
+
+r2_scores obtained from this model were:
 
 graduation rate  = 0.46
+
 retention rate  = 0.36
 
 Prior to performing hyperparameter tuning on any algorithm, this untuned model gave the best result for retention rates. This was one of models which was considered for further refinement.
@@ -647,7 +704,7 @@ gbm_grad = lgb.train(params,
                 early_stopping_rounds=5)
 ```
 
-`r2_score`s obtained from this model were:
+r2_scores obtained from this model were:
 
 graduation rate  = 0.47
 
@@ -657,9 +714,26 @@ This untuned model provided **best** result for retention rates. This was the se
 
 5. Random Forest Regressor
 
-![Alt Text](img/rfr.jpg)
+```python
+# training
+from sklearn.ensemble import RandomForestRegressor
+mod = RandomForestRegressor(max_depth=2, random_state=0)
 
-`r2_score`s obtained from this untuned model were:
+# predicting
+mod_grad = mod.fit(X_train, grad_train)
+mod_ret = mod.fit(X_train, ret_train)
+grad_pred = mod_grad.predict(X_test)
+ret_pred = mod_ret.predict(X_test)
+
+# evaluating performance
+print("r2_score for graduation rate is: ", r2_score(grad_test, grad_pred))
+print("r2_score for retention rate is: ", r2_score(ret_test, ret_pred))
+```
+
+    >> r2_score for graduation rate is:  0.31495810181665296
+    >> r2_score for retention rate is:  0.19999357091743553
+
+r2_scores obtained from this untuned model were:
 
 graduation rate  = 0.31
 
@@ -680,8 +754,6 @@ Here are the most challenging problems I faced in implementation (and prior to i
 - Expected good score from AdaBoost
 
 I got unexpected results for AdaBoost Regressor. I applied the same model in [supervised learning project](https://github.com/sanjeevai/Finding_Donors_For_CharityML) and got good results. Thorough research showed that AdaBoost was initially developed for binary classification and this is a regression task.
-
-
 
 ### Refinement
 
@@ -736,7 +808,7 @@ gbm.fit(X_train, grad_train)
 print('Best parameters found by grid search are:', gbm.best_params_)
 ```
 
-Best parameters found by grid search are: {'learning_rate': 0.1, 'n_estimators': 40}
+    >> Best parameters found by grid search are: {'learning_rate': 0.1, 'n_estimators': 40}
 
 For retention rates:
 
@@ -779,7 +851,7 @@ gbm.fit(X_train, ret_train)
 print('Best parameters found by grid search are:', gbm.best_params_)
 ```
 
-The best parameters obtained retention rates are: {'learning_rate': 0.1, 'n_estimators': 20}
+    >> The best parameters obtained retention rates are: {'learning_rate': 0.1, 'n_estimators': 20}
 
 ## IV. Results
 
@@ -819,15 +891,15 @@ Some advantages of Light GBM over other models are:
 
 2. **Lower memory usage:** Replaces continuous values to discrete bins which result in lower memory usage.
 
-3. **Better accuracy than any other boosting algorithm:** It produces much more complex trees by following leaf wise split approach rather than a level-wise approach which is the main factor in achieving higher accuracy. However, it can sometimes lead to overfitting which can be avoided by setting the max_depth parameter<sup>[11]</sup>.
+3. **Better accuracy than any other boosting algorithm:** It produces much more complex trees by following leaf wise split approach rather than a level-wise approach which is the main factor in achieving higher accuracy. However, it can sometimes lead to overfitting which can be avoided by setting the max_depth parameter<sup>[[11]](#ref11)</sup>.
 
-4. **Compatibility with Large Datasets:** It is capable of performing equally good with large datasets with a significant reduction in training time as compared to XGBOOST<sup>[11]</sup>.
+4. **Compatibility with Large Datasets:** It is capable of performing equally good with large datasets with a significant reduction in training time as compared to XGBOOST<sup>[[11]](#ref11)</sup>.
 
 5. **Parallel learning supported.**
 
 ### Justification
 
-Below is a comparision of performance of our final model and the benchmark model showing `r2_score`s for graduation and retention rates.
+Below is a comparision of performance of our final model and the benchmark model showing r2_scores for graduation and retention rates.
 
 |Model|graduation rates|retention rates |
 |------|------|------|
@@ -880,26 +952,48 @@ We have not used XGBoost algorithm here. Maybe it can be used in further iterati
 
 If we consider our final solution as the new benchmark then I think better solutions exist because we have obtained r2 scores of 0.8 and 0.6 only. Atleast r2 scores for retention rate can be improved significantly.
 
-## VI References
+## VI. References
+
+<a id="ref1"></a>
 
 1. https://www.usnews.com/opinion/articles/2013/08/15/why-big-data-not-moocs-will-revolutionize-education
 
+<a id="ref2"></a>
+
 2. https://arxiv.org/pdf/1606.06364.pdf
+
+<a id="ref3"></a>
 
 3. https://arxiv.org/pdf/1708.09344.pdf
 
+<a id="ref4"></a>
+
 4. http://stattrek.com/statistics/dictionary.aspx?definition=coefficient_of_determination
+
+<a id="ref5"></a>
 
 5. Steel, R. G. D.; Torrie, J. H. (1960). Principles and Procedures of Statistics with Special Reference to the Biological Sciences. McGraw Hill.
 
+<a id="ref6"></a>
+
 6. Glantz, Stanton A.; Slinker, B. K. (1990). Primer of Applied Regression and Analysis of Variance. McGraw-Hill. ISBN 0-07-023407-8.
+
+<a id="ref7"></a>
 
 7. Draper, N. R.; Smith, H. (1998). Applied Regression Analysis. Wiley-Interscience. ISBN 0-471-17082-8.
 
+<a id="ref8"></a>
+
 8. https://stackoverflow.com/questions/23309073/how-is-the-r2-value-in-scikit-learn-calculated
+
+<a id="ref9"></a>
 
 9. https://www.collegefactual.com/colleges/united-states-university/academic-life/graduation-and-retention/
 
-10. https://en.wikipedia.org/wiki/Decision_tree_learning
+<a id="ref10"></a>
 
-11. https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/
+10.  https://en.wikipedia.org/wiki/Decision_tree_learning
+
+<a id="ref11"></a>
+
+11.  https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/
