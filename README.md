@@ -24,7 +24,7 @@ In this problem, we will use supervised learning techniques to determine which u
 
     First-time, full-time student retention rate at **four-year institutions**.
 
-These are just the target variables. The features space consist of 100+ variables. To know more about them, please see `metadata.xlsx` file.
+These are just the target variables. The feature space consist of 100+ variables. To know more about them, please see `metadata.xlsx` file.
 
 ### Metrics
 
