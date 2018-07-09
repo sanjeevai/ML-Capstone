@@ -6,7 +6,7 @@
 
 ### Project Overview
 
-In this project I have used supervised learning techniques to find the most relevant university level factors which affect retention and graduation rates in the U.S. colleges.
+This is the third project in ML Advanced Nanodegree at Udacity. In this project I have used supervised learning techniques to find the most relevant university level factors which affect retention and graduation rates in the U.S. colleges.
 
 ### Problem Statement
 
@@ -23,6 +23,8 @@ In this problem, we will use supervised learning techniques to determine which u
     **RET_FT4**
 
     First-time, full-time student retention rate at **four-year institutions**.
+
+These are the target variable. The features space consist of 100+ variables. To know more about them, please see `metadata.xlsx` file.
 
 ### Metrics
 
