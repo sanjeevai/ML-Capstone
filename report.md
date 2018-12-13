@@ -14,9 +14,9 @@ Supervised learning is one of the most popular areas of machine learning in whic
 development has already taken place. In this project we are trying to identify the university-level
 factors which predict the presence of a strong retention and graduation rate. As the leader of the
 big data revolution, Google gathers information through clicks on the Internet and uses this
-information to personalize advertising to individual users<sup>[[1]](#ref1)</sup>. Previously, machine learning has been used in predicting the retention and graduation rates by using data sets of different US colleges. Student data consisted of two types of information: demographic information of student and transcripts<sup>[[2]](#ref2)</sup>. In fact, it is believed that 50-60% of students entering US colleges intending to major in a STEM field ultimately either graduate with a non - STEM degree or do not graduate at all<sup>[[3]](#ref3)</sup>.
+information to personalize advertising to individual users<sup>[[1]](#ref1)</sup>. Previously, machine learning has been used in predicting the retention and graduation rates by using data sets of different US colleges. Student data consisted of two types of information: demographic information of student and transcripts<sup>[[2]](#ref2)</sup>. In fact, it is believed that 50-60% of students entering US colleges intending to major in a **STEM** field ultimately either graduate with a **non-STEM** degree or do not graduate at all<sup>[[3]](#ref3)</sup>.
 
-The link to the data source is [here](https://github.com/sanjeevai/ML_Capstone). The name of the file is data.csv.
+The link to the data source is [here](https://github.com/sanjeevai/ML-Capstone). Name of the file is data.csv.
 Data was collected from [data.gov](https://catalog.data.gov/dataset/college-scorecard), but for ease of access we have downloaded it and pushed it to this repository.
 
 ### Problem Statement
@@ -28,15 +28,21 @@ We have two target variables:
 1. Graduation rate, and
 2. Retention rate
 
-Both are continuous variable so this is a regression task. We will train same regression models for both target variables but the final model will be chosen based on the `r2_score`. It may be the case that one model performs better for graduation rate and another for retention rate.
+Both are continuous variable so this is a regression task. We will train same regression models for both target variables but the final model will be chosen based on the `r2_score`. It may be the case that one model performs better for graduation rate and another model for retention rate.
 
 ### Metrics
 
-We will use `r2_score` as the metric for performance of our model. In statistics, the coefficient of determination, denoted R2 or r2 and pronounced "R squared", is the proportion of the variance in the dependent variable that is predictable from the independent variable(s)<sup>[[4]](#ref4)</sup>. It provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model<sup>[[5]](#ref5)[[6]](#ref6)[[7]](#ref7)</sup>.
+We will use [`r2_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html) as the metric for performance of our model. In statistics, the coefficient of determination, denoted R2 or r2 and pronounced "R squared", is the proportion of the variance in the dependent variable that is predictable from the independent variable(s)<sup>[[4]](#ref4)</sup>. It provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model<sup>[[5]](#ref5)[[6]](#ref6)[[7]](#ref7)</sup>.
 
-r2 = 1 - RSS/TSS
+r2 = 1 - (RSS/TSS)
 
-here RSS = sum of squares of difference between actual values(yi) and predicted values(yi^) and TSS = sum of squares of difference between actual values (yi) and mean value (Before applying Regression). So you can imagine TSS representing the best(actual) model, and RSS being in between our best model and the worst absolute mean model in which case we'll get RSS/TSS < 1. If our model is even worse than the worst mean model then in that case RSS > TSS(Since difference between actual observation and mean value < difference predicted value and actual observation)<sup>[[8]](#ref8)</sup>.
+here:
+
+**RSS (Residual Sum of Squares)** = sum of squares of difference between actual values(yi) and predicted values(yi^);
+
+**TSS (Total Sum of Squares)** = sum of squares of difference between actual values (yi) and mean value (Before applying Regression).
+
+So you can imagine TSS representing the **best** (actual) model, and RSS being **in between** our best model and the worst absolute mean model in which case we'll get RSS/TSS less than 1. If our model is even worse than the worst mean model then in that case RSS > TSS(Since difference between actual observation and mean value is less than the difference between predicted value and actual observation)<sup>[[8]](#ref8)</sup>.
 
 `r2_score` is a good metric for this problem because this is a regression problem and `r2_score` can provide a clear understanding of a regression model's performance by comparing the predicted value with true value in the simplest way.
 
@@ -48,376 +54,369 @@ In our problem we have 2 target variables, both continuous and scaled using `Sta
 
 Name of the input data file is data.csv. It has 7593 observations and 123 variables.
 
-Information about all the variables can be seen in metadata.xlsx file. Let us discuss the variable in our input data.
+Information about all the variables can be seen in _metadata.xlsx_ file. Let us discuss the variable in our input data.
 
-Features(123):
+#### Features(117)
 
-**UNITID**: Unit ID for institution
+1. **UNITID**: Unit ID for institution
 
-**OPEID**: 8-digit OPEID ID for institution
+2. **OPEID**: 8-digit OPEID ID for institution
 
-**OPEID6**: 6-digit OPEID for institution
+3. **OPEID6**: 6-digit OPEID for institution
 
-**INSTNM**: Institution name
+4. **INSTNM**: Institution name
 
-**CITY**: city
+5. **CITY**: city
 
-**STABBR**: State postcode
+6. **STABBR**: State postcode
 
-**INSTURL**: URL for instution's homepage
-
-**NPCURL**: URL for institution's net price calculator
-
-**HCM2**: Schools that are on Heightened Cash Monitoring 2 by the Department of Education
-
-**PREDDEG**: Predominant undergraduate degree awarded. Can take 5 values:
-
-1. Not classified
-2. Predominantly certificate-degree granting
-3. Predominantly associate's-degree granting
-4. Predominantly bachelor's-degree granting
-5. Entirely graduate-degree granting
-
-**HIGHDEG**: Highest degree awarded. Can take 5 values:
-
-1. Non-degree-granting
-2. Certificate degree
-3. Associate degree
-4. Bachelor's degree
-5. Graduate degree
-
-**CONTROL**: Control of institution. Can take 3 values:
-
-1. Public
-2. Private non-profit
-3. Private for-profit
-
-**LOCALE**: Locale of institution. Can take 12 values:
-
-1. City: Large (population of 250,000 or more)
-2. City: Midsize (population of at least 100,000 but less than 250,000)
-3. City: Small (population less than 100,000)
-4. Suburb: Large (outside principal city, in urbanized area with population of 250,000 or more)
-5. Suburb: Midsize (outside principal city, in urbanized area with population of at least 100,000 but less than 250,000)
-6. Suburb: Small (outside principal city, in urbanized area with population less than 100,000)
-7. Town: Fringe (in urban cluster up to 10 miles from an urbanized area)
-8. Town: Distant (in urban cluster more than 10 miles and up to 35 miles from an urbanized area)
-9. Town: Remote (in urban cluster more than 35 miles from an urbanized area)
-10. Rural: Fringe (rural territory up to 5 miles from an urbanized area or up to 2.5 miles from an urban cluster)
-11. Rural: Distant (rural territory more than 5 miles but up to 25 miles from an urbanized area or more than 2.5 and up to 10 miles from an urban cluster)
-12. Rural: Remote (rural territory more than 25 miles from an urbanized area and more than 10 miles from an urban cluster)
-
-**HBCU**: Flag for historically Black College and University.
-
-**PBI**: Flag for predominantly black institution.
-
-**ANNHI**: Flag for Alaska Native Native Hawaiian serving institution.
-
-**TRIBAL**: Flag for tribal college and university
-
-**AANAPII**: Flag for Asian American Native American Pacific Islander-serving institution
-
-**HSI**: Flag for Hispanic-serving institution
-
-**NANTI**: Flag for Native American non-tribal institution
+7. **INSTURL**: URL for instution's homepage
+
+8. **NPCURL**: URL for institution's net price calculator
+
+9. **HCM2**: Schools that are on Heightened Cash Monitoring 2 by the Department of Education
+
+10. **PREDDEG**: Predominant undergraduate degree awarded. Can take 5 values:
+
+    1. Not classified
+    2. Predominantly certificate-degree granting
+    3. Predominantly associate's-degree granting
+    4. Predominantly bachelor's-degree granting
+    5. Entirely graduate-degree granting
+
+11. **HIGHDEG**: Highest degree awarded. Can take 5 values:
+
+    1. Non-degree-granting
+    2. Certificate degree
+    3. Associate degree
+    4. Bachelor's degree
+    5. Graduate degree
+
+12. **CONTROL**: Control of institution. Can take 3 values:
+
+    1. Public
+    2. Private non-profit
+    3. Private for-profit
+
+13. **LOCALE**: Locale of institution. Can take 12 values:
+
+    1. City: Large (population of 250,000 or more)
+    2. City: Midsize (population of at least 100,000 but less than 250,000)
+    3. City: Small (population less than 100,000)
+    4. Suburb: Large (outside principal city, in urbanized area with population of 250,000 or more)
+    5. Suburb: Midsize (outside principal city, in urbanized area with population of at least 100,000 but less than 250,000)
+    6. Suburb: Small (outside principal city, in urbanized area with population less than 100,000)
+    7. Town: Fringe (in urban cluster up to 10 miles from an urbanized area)
+    8. Town: Distant (in urban cluster more than 10 miles and up to 35 miles from an urbanized area)
+    9. Town: Remote (in urban cluster more than 35 miles from an urbanized area)
+    10. Rural: Fringe (rural territory up to 5 miles from an urbanized area or up to 2.5 miles from an urban cluster)
+    11. Rural: Distant (rural territory more than 5 miles but up to 25 miles from an urbanized area or more than 2.5 and up to 10 miles from an urban cluster)
+    12. Rural: Remote (rural territory more than 25 miles from an urbanized area and more than 10 miles from an urban cluster)
+
+14. **HBCU**: Flag for historically Black College and University.
+
+15. **PBI**: Flag for predominantly black institution.
+
+16. **ANNHI**: Flag for Alaska Native Native Hawaiian serving institution.
+
+17. **TRIBAL**: Flag for tribal college and university
+
+18. **AANAPII**: Flag for Asian American Native American Pacific Islander-serving institution
+
+19. **HSI**: Flag for Hispanic-serving institution
+
+20. **NANTI**: Flag for Native American non-tribal institution
 
-**MENONLY**: Flag for men-only college
+21. **MENONLY**: Flag for men-only college
 
-**WOMENONLY**: Flag for women-only college
+22. **WOMENONLY**: Flag for women-only college
 
-**RELAFFIL**: Religious affiliation of the institution. It can take 65 values:
+23. **RELAFFIL**: Religious affiliation of the institution. It can take 65 values:
 
-1. Not reported
-2. Not applicable
-3. American Evangelical Lutheran Church
-4. African Methodist Episcopal Zion Church
-5. Assemblies of God Church
-6. Brethren Church
-7. Roman Catholic
-8. Wisconsin Evangelical Lutheran Synod
-9. Christ and Missionary Alliance Church
-10. Christian Reformed Church
-11. Evangelical Congregational Church
-12. Evangelical Covenant Church of America
-13. Evangelical Free Church of America
-14. Evangelical Lutheran Church
-15. International United Pentecostal Church
-16. Free Will Baptist Church
-17. Interdenominational
-18. Mennonite Brethren Church
-19. Moravian Church
-20. North American Baptist
-21. Pentecostal Holiness Church
-22. Christian Churches and Churches of Christ
-23. Reformed Church in America
-24. Episcopal Church, Reformed
-25. African Methodist Episcopal
-26. American Baptist
-27. American Lutheran
-28. Baptist
-29. Christian Methodist Episcopal
-30. Church of God
-31. Church of Brethren
-32. Church of the Nazarene
-33. Cumberland Presbyterian
-34. Christian Church (Disciples of Christ)
-35. Free Methodist
-36. Friends
-37. Presbyterian Church (USA)
-38. Lutheran Church in America
-39. Lutheran Church - Missouri Synod
-40. Mennonite Church
-41. United Methodist
-42. Protestant Episcopal
-43. Churches of Christ
-44. Southern Baptist
-45. United Church of Christ
-46. Protestant, not specified
-47. Multiple Protestant Denomination
-48. Other Protestant
-49. Jewish
-50. Reformed Presbyterian Church
-51. United Brethren Church
-52. Missionary Church Inc
-53. Undenominational
-54. Wesleyan
-55. Greek Orthodox
-56. Russian Orthodox
-57. Unitarian Universalist
-58. Latter Day Saints (Mormon Church)
-59. Seventh Day Adventists
-60. The Presbyterian Church in America
-61. Other (none of the above)
-62. Original Free Will Baptist
-63. Ecumenical Christian
-64. Evangelical Christian
-65. Presbyterian
+    1. Not reported
+    2. Not applicable
+    3. American Evangelical Lutheran Church
+    4. African Methodist Episcopal Zion Church
+    5. Assemblies of God Church
+    6. Brethren Church
+    7. Roman Catholic
+    8. Wisconsin Evangelical Lutheran Synod
+    9. Christ and Missionary Alliance Church
+    10. Christian Reformed Church
+    11. Evangelical Congregational Church
+    12. Evangelical Covenant Church of America
+    13. Evangelical Free Church of America
+    14. Evangelical Lutheran Church
+    15. International United Pentecostal Church
+    16. Free Will Baptist Church
+    17. Interdenominational
+    18. Mennonite Brethren Church
+    19. Moravian Church
+    20. North American Baptist
+    21. Pentecostal Holiness Church
+    22. Christian Churches and Churches of Christ
+    23. Reformed Church in America
+    24. Episcopal Church, Reformed
+    25. African Methodist Episcopal
+    26. American Baptist
+    27. American Lutheran
+    28. Baptist
+    29. Christian Methodist Episcopal
+    30. Church of God
+    31. Church of Brethren
+    32. Church of the Nazarene
+    33. Cumberland Presbyterian
+    34. Christian Church (Disciples of Christ)
+    35. Free Methodist
+    36. Friends
+    37. Presbyterian Church (USA)
+    38. Lutheran Church in America
+    39. Lutheran Church - Missouri Synod
+    40. Mennonite Church
+    41. United Methodist
+    42. Protestant Episcopal
+    43. Churches of Christ
+    44. Southern Baptist
+    45. United Church of Christ
+    46. Protestant, not specified
+    47. Multiple Protestant Denomination
+    48. Other Protestant
+    49. Jewish
+    50. Reformed Presbyterian Church
+    51. United Brethren Church
+    52. Missionary Church Inc
+    53. Undenominational
+    54. Wesleyan
+    55. Greek Orthodox
+    56. Russian Orthodox
+    57. Unitarian Universalist
+    58. Latter Day Saints (Mormon Church)
+    59. Seventh Day Adventists
+    60. The Presbyterian Church in America
+    61. Other (none of the above)
+    62. Original Free Will Baptist
+    63. Ecumenical Christian
+    64. Evangelical Christian
+    65. Presbyterian
 
-**SATVR25**: 25th percentile of SAT scores at the institution (critical reading)
+24. **SATVR25**: 25th percentile of SAT scores at the institution (critical reading)
 
-**SATVR75**: 75th percentile of SAT scores at the institution (critical reading)
+25. **SATVR75**: 75th percentile of SAT scores at the institution (critical reading)
 
-**SATMT25**: 25th percentile of SAT scores at the institution (math)
+26. **SATMT25**: 25th percentile of SAT scores at the institution (math)
 
-**SATMT75**: 75th percentile of SAT scores at the institution (math)
+27. **SATMT75**: 75th percentile of SAT scores at the institution (math)
 
-**SATWR25**: 25th percentile of SAT scores at the institution (writing)
+28. **SATWR25**: 25th percentile of SAT scores at the institution (writing)
 
-**SATWR75**: 75th percentile of SAT scores at the institution (writing)
+29. **SATWR75**: 75th percentile of SAT scores at the institution (writing)
 
-**SATVRMID**: Midpoint of SAT scores at the institution (critical reading)
+30. **SATVRMID**: Midpoint of SAT scores at the institution (critical reading)
 
-**SATMTMID**: Midpoint of SAT scores at the institution (math)
+31. **SATMTMID**: Midpoint of SAT scores at the institution (math)
 
-**SATWRMID**: Midpoint of SAT scores at the institution (writing)
+32. **SATWRMID**: Midpoint of SAT scores at the institution (writing)
 
-**ACTCM25**: 25th percentile of the ACT cumulative score
+33. **ACTCM25**: 25th percentile of the ACT cumulative score
 
-**ACTCM75**: 75th percentile of the ACT cumulative score
+34. **ACTCM75**: 75th percentile of the ACT cumulative score
 
-**ACTEN25**: 25th percentile of the ACT English score
+35. **ACTEN25**: 25th percentile of the ACT English score
 
-**ACTEN75**: 75th percentile of the ACT English score
+36. **ACTEN75**: 75th percentile of the ACT English score
 
-**ACTMT25**: 25th percentile of the ACT math score
+37. **ACTMT25**: 25th percentile of the ACT math score
 
-**ACTMT75**: 75th percentile of the ACT math score
+38. **ACTMT75**: 75th percentile of the ACT math score
 
-**ACTWR25**: 25th percentile of the ACT writing score
+39. **ACTWR25**: 25th percentile of the ACT writing score
 
-**ACTWR75**: 75th percentile of the ACT writing score
+40. **ACTWR75**: 75th percentile of the ACT writing score
 
-**ACTCMMID**: Midpoint of the ACT cumulative score
+41. **ACTCMMID**: Midpoint of the ACT cumulative score
 
-**ACTENMID**: Midpoint of the ACT English score
+42. **ACTENMID**: Midpoint of the ACT English score
 
-**ACTMTMID**: Midpoint of the ACT math score
+43. **ACTMTMID**: Midpoint of the ACT math score
 
-**ACTWRMID**: Midpoint of the ACT writing score
+44. **ACTWRMID**: Midpoint of the ACT writing score
 
-**SAT_AVG**: Average SAT equivalent score of students admitted
+45. **SAT_AVG**: Average SAT equivalent score of students admitted
 
-**SAT_AVG_ALL**:Average SAT equivalent score of students admitted for all campuses rolled up to the 6-digit OPE ID
+46. **SAT_AVG_ALL**:Average SAT equivalent score of students admitted for all campuses rolled up to the 6-digit OPE ID
 
-**PCIP01**: Percentage of degrees awarded in Agriculture, Agriculture Operations, And Related Sciences.
+47. **PCIP01**: Percentage of degrees awarded in Agriculture, Agriculture Operations, And Related Sciences.
 
-**PCIP03**: Percentage of degrees awarded in Natural Resources And Conservation.
+48. **PCIP03**: Percentage of degrees awarded in Natural Resources And Conservation.
 
-**PCIP04**: Percentage of degrees awarded in Architecture And Related Services.
+49. **PCIP04**: Percentage of degrees awarded in Architecture And Related Services.
 
-**PCIP05**: Percentage of degrees awarded in Area, Ethnic, Cultural, Gender, And Group Studies.
+50. **PCIP05**: Percentage of degrees awarded in Area, Ethnic, Cultural, Gender, And Group Studies.
 
-**PCIP09**: Percentage of degrees awarded in Communication, Journalism, And Related Programs.
+51. **PCIP09**: Percentage of degrees awarded in Communication, Journalism, And Related Programs.
 
-**PCIP10**: Percentage of degrees awarded in Communications Technologies/Technicians And Support Services.
+52. **PCIP10**: Percentage of degrees awarded in Communications Technologies/Technicians And Support Services.
 
-**PCIP11**: Percentage of degrees awarded in Computer And Information Sciences And Support Services.
+53. **PCIP11**: Percentage of degrees awarded in Computer And Information Sciences And Support Services.
 
-**PCIP12**: Percentage of degrees awarded in Personal And Culinary Services.
+54. **PCIP12**: Percentage of degrees awarded in Personal And Culinary Services.
 
-**PCIP13**: Percentage of degrees awarded in Education.
+55. **PCIP13**: Percentage of degrees awarded in Education.
 
-**PCIP14**: Percentage of degrees awarded in Engineering.
+56. **PCIP14**: Percentage of degrees awarded in Engineering.
 
-**PCIP15**: Percentage of degrees awarded in Engineering Technologies And Engineering-Related Fields.
+57. **PCIP15**: Percentage of degrees awarded in Engineering Technologies And Engineering-Related Fields.
 
-**PCIP16**: Percentage of degrees awarded in Foreign Languages, Literatures, And Linguistics.
+58. **PCIP16**: Percentage of degrees awarded in Foreign Languages, Literatures, And Linguistics.
 
-**PCIP19**: Percentage of degrees awarded in Family And Consumer Sciences/Human Sciences.
+59. **PCIP19**: Percentage of degrees awarded in Family And Consumer Sciences/Human Sciences.
 
-**PCIP22**: Percentage of degrees awarded in Legal Professions And Studies.
+60. **PCIP22**: Percentage of degrees awarded in Legal Professions And Studies.
 
-**PCIP23**: Percentage of degrees awarded in English Language And Literature/Letters.
+61. **PCIP23**: Percentage of degrees awarded in English Language And Literature/Letters.
 
-**PCIP24**: Percentage of degrees awarded in Liberal Arts And Sciences, General Studies And Humanities.
+62. **PCIP24**: Percentage of degrees awarded in Liberal Arts And Sciences, General Studies And Humanities.
 
-**PCIP25**: Percentage of degrees awarded in Library Science.
+63. **PCIP25**: Percentage of degrees awarded in Library Science.
 
-**PCIP26**: Percentage of degrees awarded in Biological And Biomedical Sciences.
+64. **PCIP26**: Percentage of degrees awarded in Biological And Biomedical Sciences.
 
-**PCIP27**: Percentage of degrees awarded in Mathematics And Statistics.
+65. **PCIP27**: Percentage of degrees awarded in Mathematics And Statistics.
 
-**PCIP29**: Percentage of degrees awarded in Military Technologies And Applied Sciences.
+66. **PCIP29**: Percentage of degrees awarded in Military Technologies And Applied Sciences.
 
-**PCIP30**: Percentage of degrees awarded in Multi/Interdisciplinary Studies.
+67. **PCIP30**: Percentage of degrees awarded in Multi/Interdisciplinary Studies.
 
-**PCIP31**: Percentage of degrees awarded in Parks, Recreation, Leisure, And Fitness Studies.
+68. **PCIP31**: Percentage of degrees awarded in Parks, Recreation, Leisure, And Fitness Studies.
 
-**PCIP38**: Percentage of degrees awarded in Philosophy And Religious Studies.
+69. **PCIP38**: Percentage of degrees awarded in Philosophy And Religious Studies.
 
-**PCIP39**: Percentage of degrees awarded in Theology And Religious Vocations.
+70. **PCIP39**: Percentage of degrees awarded in Theology And Religious Vocations.
 
-**PCIP40**: Percentage of degrees awarded in Physical Sciences.
+71. **PCIP40**: Percentage of degrees awarded in Physical Sciences.
 
-**PCIP41**: Percentage of degrees awarded in Science Technologies/Technicians.
+72. **PCIP41**: Percentage of degrees awarded in Science Technologies/Technicians.
 
-**PCIP42**: Percentage of degrees awarded in Psychology.
+73. **PCIP42**: Percentage of degrees awarded in Psychology.
 
-**PCIP43**: Percentage of degrees awarded in Homeland Security, Law Enforcement, Firefighting And Related Protective 
+74. **PCIP43**: Percentage of degrees awarded in Homeland Security, Law Enforcement, Firefighting And Related Protective 
 Services.
 
-**PCIP44**: Percentage of degrees awarded in Public Administration And Social Service Professions.
+75. **PCIP44**: Percentage of degrees awarded in Public Administration And Social Service Professions.
 
-**PCIP45**: Percentage of degrees awarded in Social Sciences.
+76. **PCIP45**: Percentage of degrees awarded in Social Sciences.
 
-**PCIP46**: Percentage of degrees awarded in Construction Trades.
+77. **PCIP46**: Percentage of degrees awarded in Construction Trades.
 
-**PCIP47**: Percentage of degrees awarded in Mechanic And Repair Technologies/Technicians.
+78. **PCIP47**: Percentage of degrees awarded in Mechanic And Repair Technologies/Technicians.
 
-**PCIP48**: Percentage of degrees awarded in Precision Production.
+79. **PCIP48**: Percentage of degrees awarded in Precision Production.
 
-**PCIP49**: Percentage of degrees awarded in Transportation And Materials Moving.
+80. **PCIP49**: Percentage of degrees awarded in Transportation And Materials Moving.
 
-**PCIP50**: Percentage of degrees awarded in Visual And Performing Arts.
+81. **PCIP50**: Percentage of degrees awarded in Visual And Performing Arts.
 
-**PCIP51**: Percentage of degrees awarded in Health Professions And Related Programs.
+82. **PCIP51**: Percentage of degrees awarded in Health Professions And Related Programs.
 
-**PCIP52**: Percentage of degrees awarded in Business, Management, Marketing, And Related Support Services.
+83. **PCIP52**: Percentage of degrees awarded in Business, Management, Marketing, And Related Support Services.
 
-**PCIP54**: Percentage of degrees awarded in History.
+84. **PCIP54**: Percentage of degrees awarded in History.
 
-**DISTANCEONLY**: Flag for distance-education-only education
+85. **DISTANCEONLY**: Flag for distance-education-only education
 
-**UGDS**: Enrollment of undergraduate certificate/degree-seeking students
+86. **UGDS**: Enrollment of undergraduate certificate/degree-seeking students
 
-**UGDS_WHITE**: Total share of enrollment of undergraduate degree-seeking students who are white
+87. **UGDS_WHITE**: Total share of enrollment of undergraduate degree-seeking students who are white
 
-**UGDS_BLACK**: Total share of enrollment of undergraduate degree-seeking students who are black
+88. **UGDS_BLACK**: Total share of enrollment of undergraduate degree-seeking students who are black
 
-**UGDS_HISP**: Total share of enrollment of undergraduate degree-seeking students who are Hispanic
+89. **UGDS_HISP**: Total share of enrollment of undergraduate degree-seeking students who are Hispanic
 
-**UGDS_ASIAN**: Total share of enrollment of undergraduate degree-seeking students who are Asian
+90. **UGDS_ASIAN**: Total share of enrollment of undergraduate degree-seeking students who are Asian
 
-**UGDS_AIAN**: Total share of enrollment of undergraduate degree-seeking students who are American Indian/Alaska Native
+91. **UGDS_AIAN**: Total share of enrollment of undergraduate degree-seeking students who are American Indian/Alaska Native
 
-**UGDS_NHPI**: Total share of enrollment of undergraduate degree-seeking students who are Native Hawaiian/Pacific 
-Islander
+92. **UGDS_NHPI**: Total share of enrollment of undergraduate degree-seeking students who are Native Hawaiian/Pacific Islander
 
-**UGDS_2MOR**: Total share of enrollment of undergraduate degree-seeking students who are two or more races
+93. **UGDS_2MOR**: Total share of enrollment of undergraduate degree-seeking students who are two or more races
 
-**UGDS_NRA**: Total share of enrollment of undergraduate degree-seeking students who are non-resident aliens
+94. **UGDS_NRA**: Total share of enrollment of undergraduate degree-seeking students who are non-resident aliens
 
-**UGDS_UNKN**: Total share of enrollment of undergraduate degree-seeking students whose race is unknown
+95. **UGDS_UNKN**: Total share of enrollment of undergraduate degree-seeking students whose race is unknown
 
-**PPTUG_EF**: Share of undergraduate, degree-/certificate-seeking students who are part-time 
+96. **PPTUG_EF**: Share of undergraduate, degree-/certificate-seeking students who are part-time 
 
-**CURROPER**: Flag for currently operating institution, 0=closed, 1=operating
+97. **CURROPER**: Flag for currently operating institution, 0=closed, 1=operating
 
-**NPT4_PUB**: Average net price for Title IV institutions (public institutions)
+98. **NPT4_PUB**: Average net price for Title IV institutions (public institutions)
 
-**NPT4_PRIV**: Average net price for Title IV institutions (private for-profit and nonprofit institutions)
+99. **NPT4_PRIV**: Average net price for Title IV institutions (private for-profit and nonprofit institutions)
 
-**NPT41_PUB**: Average net price for \$0-$30,000 family income (public institutions)
+100. **NPT41_PUB**: Average net price for \$0-$30,000 family income (public institutions)
 
-**NPT42_PUB**: Average net price for \$30,001-$48,000 family income (public institutions)
+101. **NPT42_PUB**: Average net price for \$30,001-$48,000 family income (public institutions)
 
-**NPT43_PUB**: Average net price for \$48,001-$75,000 family income (public institutions)
+102. **NPT43_PUB**: Average net price for \$48,001-$75,000 family income (public institutions)
 
-**NPT44_PUB**: Average net price for \$75,001-$110,000 family income (public institutions)
+103. **NPT44_PUB**: Average net price for \$75,001-$110,000 family income (public institutions)
 
-**NPT45_PUB**: Average net price for \$110,000+ family income (public institutions)
+104. **NPT45_PUB**: Average net price for \$110,000+ family income (public institutions)
 
-**NPT41_PRIV**: Average net price for \$0-$30,000 family income (private for-profit and nonprofit institutions)
+105. **NPT41_PRIV**: Average net price for \$0-$30,000 family income (private for-profit and nonprofit institutions)
 
-**NPT42_PRIV**: Average net price for \$30,001-$48,000 family income (private for-profit and nonprofit institutions)
+106. **NPT42_PRIV**: Average net price for \$30,001-$48,000 family income (private for-profit and nonprofit institutions)
 
-**NPT43_PRIV**: Average net price for \$48,001-$75,000 family income (private for-profit and nonprofit institutions)
+107. **NPT43_PRIV**: Average net price for \$48,001-$75,000 family income (private for-profit and nonprofit institutions)
 
-**NPT44_PRIV**: Average net price for \$75,001-$110,000 family income (private for-profit and nonprofit institutions)
+108. **NPT44_PRIV**: Average net price for \$75,001-$110,000 family income (private for-profit and nonprofit institutions)
 
-**NPT45_PRIV**: Average net price for \$110,000+ family income (private for-profit and nonprofit institutions)
+109. **NPT45_PRIV**: Average net price for \$110,000+ family income (private for-profit and nonprofit institutions)
 
-**PCTPELL**: Percentage of undergraduates who receive a Pell Grant
+110. **PCTPELL**: Percentage of undergraduates who receive a Pell Grant
 
-**PCTFLOAN**: Percent of all undergraduate students receiving a federal student loan
+111. **PCTFLOAN**: Percent of all undergraduate students receiving a federal student loan
 
-**UG25ABV**: Percentage of undergraduates aged 25 and above
+112. **UG25ABV**: Percentage of undergraduates aged 25 and above
 
-**MD_EARN_WNE_P10**: Median earnings of students working and not enrolled 10 years after entry
+113. **MD_EARN_WNE_P10**: Median earnings of students working and not enrolled 10 years after entry
 
-**GT_25K_P6**: Share of students earning over $25,000/year (threshold earnings) 6 years after entry
+114. **GT_25K_P6**: Share of students earning over $25,000/year (threshold earnings) 6 years after entry
 
-**GRAD_DEBT_MDN_SUPP**: Median debt of completers, suppressed for n=30
+115. **GRAD_DEBT_MDN_SUPP**: Median debt of completers, suppressed for n=30
 
-**GRAD_DEBT_MDN10YR_SUPP**: Median debt of completers expressed in 10-year monthly payments, suppressed for n=30
+116. **GRAD_DEBT_MDN10YR_SUPP**: Median debt of completers expressed in 10-year monthly payments, suppressed for n=30
 
-**RPY_3YR_RT_SUPP**: 3-year repayment rate, suppressed for n=30
+117. **RPY_3YR_RT_SUPP**: 3-year repayment rate, suppressed for n=30
 
-Target variables:
+#### Target variables
 
-1. For graduation rates we have two variables in our data. Let us see the difference between those two:
+For graduation rates we have two variables in our data. Let us see the difference between those two.
 
-    1.1. **rate_suppressed.four_year**  
-    Completion rate for first-time, full-time students at four-year institutions (150% of expected time to completion) , pooled in two-year rolling averages and suppressed for small n size.  
-    1.2. **rate_suppressed.lt_four_year_150percent**  
-    Completion rate for first-time, full-time students at less-than-four-year institutions (150% of expected time to completion), pooled in two-year rolling averages and suppressed for small n size
+1. **rate_suppressed.four_year** : Completion rate for first-time, full-time students at four-year institutions (150% of expected time to completion) , pooled in two-year rolling averages and suppressed for small n size.  
 
-We will be making predictions for 4-year institutions.
+2. **rate_suppressed.lt_four_year_150percent**: Completion rate for first-time, full-time students at less-than-four-year institutions (150% of expected time to completion), pooled in two-year rolling averages and suppressed for small n size
 
-1. For retention rates we have four variables in our data. Let us see the difference between them:
+We will be making predictions for **4-year institutions**. So, our first target 
+variable is **rate_suppressed.four_year**
 
-2.1. **retention_rate.four_year.full_time**
+For retention rates we have four variables in our data. Let us see the difference between them:
 
-First-time, full-time student retention rate at four-year institutions.
+1. **retention_rate.four_year.full_time**: First-time, full-time student retention rate at four-year institutions.
 
-2.2. **retention_rate.lt_four_year.full_time**
+2. **retention_rate.lt_four_year.full_time**: First-time, full-time student retention rate at less-than-four-year institutions.
 
-First-time, full-time student retention rate at less-than-four-year institutions.
+3. **retention_rate.four_year.part_time**: First-time, part-time student retention rate at four-year institutions
 
-2.3. **retention_rate.four_year.part_time**
+4. **retention_rate.lt_four_year.part_time**: First-time, part-time student retention rate at four-year institutions
 
-First-time, part-time student retention rate at four-year institutions
+Retention rate is for full-time students and we are making predictions for 4-year institutions. So, our second target variable is **retention_rate.four_year.full_time**.
 
-2.4. **retention_rate.lt_four_year.part_time**
+We have two response variables:
 
-First-time, part-time student retention rate at four-year institutions
+1. **rate_suppressed.four_year**: This follows a near normal distribution.
+2. **retention_rate.four_year.full_time**: This follow a left skewed distribution with outliers to consider.
 
-Retention rate is for full-time students and we are making predictions for 4-year institutions. So, our target variable is **retention_rate.four_year.full_time**.
-
-So there are 2 response variables:
-
-1. **rate_suppressed.four_year**: This follows a normal distribution.
-2. **retention_rate.four_year.full_time**: This follow a left skewed distribution.
+![Class Labels](img/class_labels.png)
 
 Some helpful insights which helped in feature selection:
 
@@ -437,15 +436,15 @@ for col in ['OPEID', 'OPEID6', 'UNITID']:
 
 2. For SAT and ACT scores we had 25 percentile, 75 percentile and mid-point values. Since all of them had same type of distribution, we decided to keep the mid-point values and remove the other percentiles to reduce the number of outliers. We could have removed mid-point values also, but then it would be unable to consider students' transcripts as a factor.
 
-![Alt Text](img/sat.png)
+![SAT Scores](img/sat.png)
 
-![Alt Text](img/act.png)
+![ACT Scores](img/act.png)
 
 ### Exploratory visualization
 
 Distribution of class labels showed some interesting results. This is the distribution of the class variables before applying feature scaling:
 
-![Alt Text](img/class_labels.png)
+![Class Labels](img/class_labels.png)
 
 There are outliers at 0.0 in distribution of retention rates. 53 observations have such value. We have to remove these entries because no U.S. college has zero retention rate. On an average retention rate is 71%<sup>[[9]](#ref9)</sup>. This information can be concluded from the distribution of retention rate.
 
@@ -879,7 +878,7 @@ It is the number of trees to be used in the forest.
 
 Now let us see the results of our final model:
 
-![Alt Text](img/results.png)
+![Results](img/results.png)
 
 This model shows relatively poor scores for retention rates because of the distribution of retention rates. This model could have performed better if retention rates were more normally distributed.
 
@@ -920,17 +919,17 @@ Let us see the relationship between the important features and target variables.
 
 Below are some plots that give us an idea of how inability to pay debts causes dropping out of college.
 
-![Alt Text](img/grad_price.png)
+![Graduation vs College Fee](img/grad_price.png)
 
-![Alt Text](img/ret_price.png)
+![Retention vs Fee](img/ret_price.png)
 
 Not a strong correlation but still we can see how rapidly graduation and retention rates change with education fees.
 
 - Academics
 
-![Alt Text](img/grad_sat.png)
+![Graduation vs SATs](img/grad_sat.png)
 
-![Alt Text](img/ret_sat.png)
+![Retention vs SATs](img/ret_sat.png)
 
 Very strong correlation. This result was expected because present academic performance decides whether you continue your studies further or not.
 
