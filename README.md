@@ -4,9 +4,21 @@
 
 ## Project: Factors affecting graduation and retention rates in the U.S. Colleges
 
+## Table of Contents
+
+1. [Project Overview](#overview)
+2. [Problem Statement](#statement)
+3. [Metrics](#metrics)
+4. [Files](#files)
+5. [References](#refs)
+
+<a id='overview'></a>
+
 ### Project Overview
 
 This is the third project in ML Advanced Nanodegree from Udacity. In this project I have used supervised learning techniques to find the most relevant university level factors which affect retention and graduation rates in the U.S. colleges.
+
+<a id='statement'></a>
 
 ### Problem Statement
 
@@ -26,6 +38,8 @@ In this problem, we will use supervised learning techniques to determine which u
 
 These are just the target variables. The feature space consist of 100+ variables. To know more about them, please see `metadata.xlsx` file.
 
+<a id='metrics'></a>
+
 ### Metrics
 
 We have used `r2_score` as the metric for performance of our model. In statistics, the coefficient of determination, denoted R2 or r2 and pronounced "R squared", is the proportion of the variance in the dependent variable that is predictable from the independent variable(s)<sup>[[1]](#ref1)</sup>. It provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model<sup>[[2]](#ref2)[[3]](#ref3)[[4]](#ref4)</sup>.
@@ -38,35 +52,39 @@ here RSS = sum of squares of difference between actual values(yi) and predicted 
 
 In our problem we have 2 target variables, both continuous and scaled using `StandardScaler` function from sklearn. So, `r2_score` is a fit metric for this problem.
 
+<a id='files'></a>
+
 ### Files
 
-- data.csv
+<pre>
+.
+|
++-data
+| |
+| +-+data.csv-------------# INPUT DATA WITH 123 VARIABLES AND 7593 OBSERVATIONS.
+| +-+metadata.xlsx--------# EXPLANATION OF VARIABLES USED IN DATA. IT SHOW WHAT
+| |                       # EACH VARIABLE STANDS FOR, WHAT IS THE DATA TYPE OF
+| |                       # EACH VARIABLE, ETC.
+| | |
++-img---------------------# SAVED PLOTS FROM project.ipynb
+|
++-proposal
+| |
+| +-+proposal.md----------# PROPOSAL WAS REQUIRED TO SUBMIT BEFORE THE PROJECT
+| |                       # TO GIVE A PRACTICAL EXPERIENCE OF HOW TECHNICAL
+| |                       # PROJECTS ARE CARRIED OUT.
+| +-+proposal.pdf---------# PDF EXPORT OF proposal.md.
+|
++-report
+| |
+| +-+report.md------------# IT SUMMARISES THE ENTIRE WORKFLOW OF THIS PROJECT.
+| +-+report.pdf-----------# PDF EXPORT OF report.md
+|
++-+project.ipynb----------# NOTEBOOK FOR DATA ANALYSIS AND MODEL IMPLEMENTATION.
 
-This is the input data with 123 variables and 7593 observations.
+</pre>
 
-- metadata.xlsx
-
-Contains explanation of variables in our data. It show what each variable stands for, what is the data type of each variable, etc. The metadata that I obtained from source contains information for extra variables also. In order to make it readable, I have highlighted the variables which are present in our data file.
-
-- project.ipynb
-
-This is the file where I did the major part of the project. It contains all the steps of data analysis and model implementation.
-
-- proposal.md
-
-Markdown file of the proposal. Proposal was required to submit before the project to give a practical experience of how technical projects are carried out.
-
-- proposal.pdf
-
-PDF export of the proposal's markdown file.
-
-- report.md
-
-Markdown file of the report. It summarises the entire work that I did in this project.
-
-- report.pdf
-
-PDF export of the report's markdown file.
+<a id='refs'></a>
 
 ### References
 
