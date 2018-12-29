@@ -6,7 +6,35 @@ Sanjeev Yadav
 
 9 April 2018
 
+## Table of Contents
+
+- [Definition](#def)
+    - [Project Overview](#overview)
+    - [Problem Statement](#problem)
+    - [Metrics](#metrics)
+- [Analysis](#analysis)
+    - [Data Exploration](#explore)
+    - [Exploratory visualization](#explore_vis)
+    - [Algorithms and Techniques](#algo_techs)
+    - [Benchmark](#benchmark)
+- [Methodology](#method)
+    - [Data Preprocessing](#pre-process)
+    - [Implementation](#implement)
+    - [Refinement](#refine)
+- [Results](#res)
+    - [Model Evaluation and Validation](#eval)
+    - [Justification](#justify)
+- [Conclusion](#conclusion)
+    - [Free-Form visualization](#free-form-vis)
+    - [Reflection](#reflection)
+    - [Improvement](#improve)
+- [References](#refs)
+
+<a id='def'></a>
+
 ## I. Definition
+
+<a id='overview'></a>
 
 ### Project Overview
 
@@ -19,6 +47,8 @@ information to personalize advertising to individual users<sup>[[1]](#ref1)</sup
 The link to the data source is [here](https://github.com/sanjeevai/ML-Capstone). Name of the file is data.csv.
 Data was collected from [data.gov](https://catalog.data.gov/dataset/college-scorecard), but for ease of access we have downloaded it and pushed it to this repository.
 
+<a id='problem'></a>
+
 ### Problem Statement
 
 One of the most pressing issues facing American universities is the number of students who fail to graduate. Nearly one out of five four-year institutions graduate fewer than one-third of its first-time, full-time degree-seeking first-year students within six years. Although there are various explanations for attrition, we will try to identify the most important feature which affects the retention and graduation rates in 4-year institutions.
@@ -29,6 +59,8 @@ We have two target variables:
 2. Retention rate
 
 Both are continuous variable so this is a regression task. We will train same regression models for both target variables but the final model will be chosen based on the `r2_score`. It may be the case that one model performs better for graduation rate and another model for retention rate.
+
+<a id='metrics'></a>
 
 ### Metrics
 
@@ -48,7 +80,11 @@ So you can imagine TSS representing the **best** (actual) model, and RSS being *
 
 In our problem we have 2 target variables, both continuous and scaled using `StandardScaler` function from sklearn. So, `r2_score` is a fit metric for this problem.
 
+<a id='analysis'></a>
+
 ## II. Analysis
+
+<a id='explore'></a>
 
 ### Data Exploration
 
@@ -299,8 +335,7 @@ Information about all the variables can be seen in _metadata.xlsx_ file. Let us 
 
 73. **PCIP42**: Percentage of degrees awarded in Psychology.
 
-74. **PCIP43**: Percentage of degrees awarded in Homeland Security, Law Enforcement, Firefighting And Related Protective 
-Services.
+74. **PCIP43**: Percentage of degrees awarded in Homeland Security, Law Enforcement, Firefighting And Related Protective Services.
 
 75. **PCIP44**: Percentage of degrees awarded in Public Administration And Social Service Professions.
 
@@ -440,6 +475,8 @@ for col in ['OPEID', 'OPEID6', 'UNITID']:
 
 ![ACT Scores](../img/act.png)
 
+<a id='explore_vis'></a>
+
 ### Exploratory visualization
 
 Distribution of class labels showed some interesting results. This is the distribution of the class variables before applying feature scaling:
@@ -447,6 +484,8 @@ Distribution of class labels showed some interesting results. This is the distri
 ![Class Labels](../img/class_labels.png)
 
 There are outliers at 0.0 in distribution of retention rates. 53 observations have such value. We have to remove these entries because no U.S. college has zero retention rate. On an average retention rate is 71%<sup>[[9]](#ref9)</sup>. This information can be concluded from the distribution of retention rate.
+
+<a id='algo_techs'></a>
 
 ### Algorithms and Techniques
 
@@ -480,11 +519,17 @@ Light GBM grows tree vertically while other algorithm grows trees horizontally m
 
 Random forests or random decision forests are an ensemble learning method for classification, regression and other tasks, that operate by constructing a multitude of decision trees at training time and outputting the class that is the mode of the classes (classification) or mean prediction (regression) of the individual trees. Random decision forests correct for decision trees' habit of overfitting to their training set.
 
+<a id='benchmark'></a>
+
 ### Benchmark
 
 We will consider benchmark model as the decision tree regressor. We will get the `r2_score` from this model. Then we will use other regression models to improve our score.
 
+<a id='method'></a>
+
 ## III. Methodology
+
+<a id='pre-process'></a>
 
 ### Data Preprocessing
 
@@ -538,6 +583,8 @@ But before applying median imputation, we need to check for some other categoric
 We have created dummy variable for these columns.
 
 Finally we renamed the variables to be user-friendly.
+
+<a id='implement'></a>
 
 ### Implementation
 
@@ -754,6 +801,8 @@ Here are the most challenging problems I faced in implementation (and prior to i
 
 I got unexpected results for AdaBoost Regressor. I applied the same model in [supervised learning project](https://github.com/sanjeevai/Finding_Donors_For_CharityML) and got good results. Thorough research showed that AdaBoost was initially developed for binary classification and this is a regression task.
 
+<a id='refine'></a>
+
 ### Refinement
 
 Our benchmark model was decision tree regressor. For this model, `r2_score` for graduation rate was 0.31 and for retention rate was 0.20.
@@ -852,7 +901,11 @@ print('Best parameters found by grid search are:', gbm.best_params_)
 
     >> The best parameters obtained retention rates are: {'learning_rate': 0.1, 'n_estimators': 20}
 
+<a id='res'></a>
+
 ## IV. Results
+
+<a id='eval'></a>
 
 ### Model Evaluation and Validation
 
@@ -896,6 +949,8 @@ Some advantages of Light GBM over other models are:
 
 5. **Parallel learning supported.**
 
+<a id='justify'></a>
+
 ### Justification
 
 Below is a comparision of performance of our final model and the benchmark model showing r2_scores for graduation and retention rates.
@@ -907,7 +962,11 @@ Below is a comparision of performance of our final model and the benchmark model
 
 We have achieved good results in comparison to benchmark model. Now we will use `feature_importances` to see most relevant features.
 
+<a id='conclusion'></a>
+
 ## V. Conclusion
+
+<a id='free-form-vis'></a>
 
 ### Free-Form visualization
 
@@ -935,6 +994,8 @@ Very strong correlation. This result was expected because present academic perfo
 
 - Demographics
 
+<a id='reflection'></a>
+
 ### Reflection
 
 We had 7593 observations and 123 variables. The toughest part was feature selection. We have used domain knowledge to remove features which we think are less important or are not university level factor.
@@ -943,6 +1004,8 @@ One interesting aspect was that we had multiple target labels and we have to nar
 
 My final model can be used for analyzing important features affecting graduation rates as it has a decent r2 score of 0.8. For retention rates, further improvement can be made as I could get r2 score of 0.6 after hyperparameter tuning.
 
+<a id='improve'></a>
+
 ### Improvement
 
 Further improvements can be made if we use hyperparameter tuning on the remaining models also. Maybe they will give better results than our final model.
@@ -950,6 +1013,8 @@ Further improvements can be made if we use hyperparameter tuning on the remainin
 We have not used XGBoost algorithm here. Maybe it can be used in further iteration to improve the results. I did not use XGBoost because I did not know in detail about its working.
 
 If we consider our final solution as the new benchmark then I think better solutions exist because we have obtained r2 scores of 0.8 and 0.6 only. Atleast r2 scores for retention rate can be improved significantly.
+
+<a id='refs'></a>
 
 ## VI. References
 
