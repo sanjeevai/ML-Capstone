@@ -8,6 +8,19 @@ Sanjeev Yadav
 
 ## Proposal
 
+## Table of Contents
+
+- [Domain Background](#domain)
+- [Problem Statement](#problem)
+- [Data sets and inputs](#data)
+- [Solution Statement](#sol)
+- [Benchmark Model](#benchmark)
+- [Evaluation Metrics](#eval)
+- [Project Design](#design)
+- [References](#refs)
+
+<a id='domain'></a>
+
 ### Domain Background
 
 Supervised learning is one of the most popular areas of machine learning in which much development has already taken place. In this project I am trying to identify the university-level factors which predict the presence of a strong retention and graduation rate. As the leader of the big data revolution, Google gathers information through clicks on the Internet and uses this information to personalize advertising to individual users<sup>[1]</sup>. Academia will use the same model in the learning process to customize courses right down to the level of the individual. Some companies, such as the nonprofit testing firm ETS, are already harnessing data to develop predetermined learning trees to track certain responses to questions that imply mastery of specific aspects of material, thus allowing educators to organize assignments based on those answers<sup>[1]</sup>. In the United States, universities and colleges face tremendous pressures in terms of their business models, the mobility of students, the growing disillusionment with four-year degrees and the cost of higher education<sup>[1]</sup>. By paying specific attention to important factors, a university can increase its education status.
@@ -15,6 +28,8 @@ Supervised learning is one of the most popular areas of machine learning in whic
 The link to my data source is [here](https://github.com/sanjeevai/ML_Capstone). The name of the file is data.csv.
 
 Data was collected from [data.gov](https://catalog.data.gov/dataset/college-scorecard), but for easy navigation we have pushed it to the GitHub repo.
+
+<a id='problem'></a>
 
 ### Problem Statement
 
@@ -27,7 +42,9 @@ We have two target variables:
 
 Both are continuous variable so this is a regression task. We will train same regression models for both target variables but the final model will be chosen based on the `r2_score`. It may be the case that one model works good for graduation rate and some other works good for retention rate.
 
-### Datasets and Inputs
+<a id='data'></a>
+
+### Data sets and Inputs
 
 The dataset contains 2 csv files. They are:
 
@@ -411,6 +428,8 @@ So there are 2 response variables:
 
 This file contains information about the variables in our input data. It has information about extra variables also, so to improve readability we have highlighted the variables which are in our input data.
 
+<a id='sol'></a>
+
 ### Solution Statement
 
 We want to make predictions for two target variables: retention rates and graduation rates. We have around 100 features to choose from. First we will remove some irrelevant features. Our data set contains many null values. We will replace null values using median imputation method. Then we will perform feature scaling. Our target variables are continuous variables.
@@ -423,13 +442,19 @@ Then we will train a linear regressor on the training data for graduation rates 
 4. Gradient Boosting Regressor
 5. Random Forest Regressor
 
+<a id='benchmark'></a>
+
 ### Benchmark Model
 
 We will consider benchmark model as the initial linear regressor. We will get the `r2_score` from this model. Then we will use other regression models to improve our score.
 
+<a id='eval'></a>
+
 ### Evaluation Metrics
 
 We will use `r2_score` as the metric for performance of our model. `feature_importances_` method from sklearn will show the importance of each feature in predicting the target variables.
+
+<a id='design'></a>
 
 ### Project Design
 
@@ -440,6 +465,8 @@ When identifying the response variable, we have 6 columns to choose from. We wil
 Now we have our features and targets, we will normalize the data using `StandardScaler`. Then we will perform train-test split with test size of 0.2.
 
 Then we will use the supervised regressors to get the important features. `r2_score` will show the performance of our model. We will use these important features to see the practical importance of these features.
+
+<a id='refs'></a>
 
 ### References
 
