@@ -436,7 +436,7 @@ This file contains information about the variables in our input data. It has inf
 
 ### Solution Statement
 
-We want to make predictions for two target variables: retention rates and graduation rates. We have around 100 features to choose from. First we will remove some irrelevant features. Our data set contains many null values. We will replace null values using median imputation method. Then we will perform feature scaling. Our target variables are continuous variables.
+We want to make predictions for two target variables: **retention rates** and **graduation rates**. We have around **100 features** to choose from. First we will remove some irrelevant features. Our data set contains many null values. We will replace null values using median imputation method. Then we will perform feature scaling. Our target variables are continuous variables.
 
 Then we will train a linear regressor on the training data for graduation rates and retention rates. We will get some features which have high importance. We will solidify our result by using other supervised regressors and picking the best out of them. Best here means the one with highest value of `r2_score`. Other supervised regressors which will be used are:
 
