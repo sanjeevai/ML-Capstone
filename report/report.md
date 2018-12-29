@@ -416,7 +416,7 @@ We have two response variables:
 1. **rate_suppressed.four_year**: This follows a near normal distribution.
 2. **retention_rate.four_year.full_time**: This follow a left skewed distribution with outliers to consider.
 
-![Class Labels](img/class_labels.png)
+![Class Labels](../img/class_labels.png)
 
 Some helpful insights which helped in feature selection:
 
@@ -436,15 +436,15 @@ for col in ['OPEID', 'OPEID6', 'UNITID']:
 
 2. For SAT and ACT scores we had 25 percentile, 75 percentile and mid-point values. Since all of them had same type of distribution, we decided to keep the mid-point values and remove the other percentiles to reduce the number of outliers. We could have removed mid-point values also, but then it would be unable to consider students' transcripts as a factor.
 
-![SAT Scores](img/sat.png)
+![SAT Scores](../img/sat.png)
 
-![ACT Scores](img/act.png)
+![ACT Scores](../img/act.png)
 
 ### Exploratory visualization
 
 Distribution of class labels showed some interesting results. This is the distribution of the class variables before applying feature scaling:
 
-![Class Labels](img/class_labels.png)
+![Class Labels](../img/class_labels.png)
 
 There are outliers at 0.0 in distribution of retention rates. 53 observations have such value. We have to remove these entries because no U.S. college has zero retention rate. On an average retention rate is 71%<sup>[[9]](#ref9)</sup>. This information can be concluded from the distribution of retention rate.
 
@@ -878,7 +878,7 @@ It is the number of trees to be used in the forest.
 
 Now let us see the results of our final model:
 
-![Results](img/results.png)
+![Results](../img/results.png)
 
 This model shows relatively poor scores for retention rates because of the distribution of retention rates. This model could have performed better if retention rates were more normally distributed.
 
@@ -919,17 +919,17 @@ Let us see the relationship between the important features and target variables.
 
 Below are some plots that give us an idea of how inability to pay debts causes dropping out of college.
 
-![Graduation vs College Fee](img/grad_price.png)
+![Graduation vs College Fee](../img/grad_price.png)
 
-![Retention vs Fee](img/ret_price.png)
+![Retention vs Fee](../img/ret_price.png)
 
 Not a strong correlation but still we can see how rapidly graduation and retention rates change with education fees.
 
 - Academics
 
-![Graduation vs SATs](img/grad_sat.png)
+![Graduation vs SATs](../img/grad_sat.png)
 
-![Retention vs SATs](img/ret_sat.png)
+![Retention vs SATs](../img/ret_sat.png)
 
 Very strong correlation. This result was expected because present academic performance decides whether you continue your studies further or not.
 
