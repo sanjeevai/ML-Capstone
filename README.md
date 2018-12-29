@@ -65,7 +65,7 @@ In our problem we have 2 target variables, both continuous and scaled using `Sta
 | +-+metadata.xlsx--------# EXPLANATION OF VARIABLES USED IN DATA. IT SHOW WHAT
 | |                       # EACH VARIABLE STANDS FOR, WHAT IS THE DATA TYPE OF
 | |                       # EACH VARIABLE, ETC.
-| | |
+| |
 +-img---------------------# SAVED PLOTS FROM project.ipynb
 |
 +-proposal
