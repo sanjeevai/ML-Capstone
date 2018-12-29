@@ -36,19 +36,24 @@ In this problem, we will use supervised learning techniques to determine which u
 
     First-time, full-time student retention rate at **four-year institutions**.
 
-These are just the target variables. The feature space consist of 100+ variables. To know more about them, please see `metadata.xlsx` file.
+These are just the target variables. The feature space consist of **100+ variables.** To know more about them, please see `metadata.xlsx` file.
 
 <a id='metrics'></a>
 
 ### Metrics
 
-We have used `r2_score` as the metric for performance of our model. In statistics, the coefficient of determination, denoted R2 or r2 and pronounced "R squared", is the proportion of the variance in the dependent variable that is predictable from the independent variable(s)<sup>[[1]](#ref1)</sup>. It provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model<sup>[[2]](#ref2)[[3]](#ref3)[[4]](#ref4)</sup>.
+We have used **r2 score** as the metric for performance of our model. In statistics, the coefficient of determination, denoted R2 or r2 and pronounced "R squared", is the proportion of the variance in the dependent variable that is predictable from the independent variable(s)<sup>[[1]](#ref1)</sup>. It provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model<sup>[[2]](#ref2)[[3]](#ref3)[[4]](#ref4)</sup>.
 
 r2 = 1 - RSS/TSS
 
-here RSS = sum of squares of difference between actual values(yi) and predicted values(yi^) and TSS = sum of squares of difference between actual values (yi) and mean value (Before applying Regression). So you can imagine TSS representing the best(actual) model, and RSS being in between our best model and the worst absolute mean model in which case we'll get RSS/TSS < 1. If our model is even worse than the worst mean model then in that case RSS > TSS(Since difference between actual observation and mean value < difference predicted value and actual observation)<sup>[[5]](#ref5)</sup>.
+here:
+RSS = sum of squares of difference between actual values(yi) and predicted values(yi^),
 
-`r2_score` is a good metric for this problem because this is a regression problem and `r2_score` can provide a clear understanding of a regression model's performance by comparing the predicted value with true value in the simplest way.
+TSS = sum of squares of difference between actual values (yi) and mean value (Before applying Regression).
+
+So you can imagine TSS representing the best(actual) model, and RSS being in between our best model and the worst absolute mean model in which case we'll get RSS/TSS < 1. If our model is even worse than the worst mean model then in that case RSS > TSS(Since difference between actual observation and mean value < difference predicted value and actual observation)<sup>[[5]](#ref5)</sup>.
+
+R squared is a good metric for this problem because this is a regression problem and this metric can provide a clear understanding of a regression model's performance by comparing the predicted value with true value in the simplest way.
 
 In our problem we have 2 target variables, both continuous and scaled using `StandardScaler` function from sklearn. So, `r2_score` is a fit metric for this problem.
 
