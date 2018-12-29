@@ -16,7 +16,7 @@
 
 ### Project Overview
 
-This is the third project in ML Advanced Nanodegree from Udacity. In this project I have used supervised learning techniques to find the most relevant university level factors which affect retention and graduation rates in the U.S. colleges.
+This is the third project in Term 2 of [Machine Learning Engineer Nanodegree](https://in.udacity.com/course/machine-learning-engineer-nanodegree--nd009t) from [Udacity](https://in.udacity.com/). In this project I have used supervised learning techniques to find the most relevant university level factors which affect retention and graduation rates in the U.S. colleges.
 
 <a id='statement'></a>
 
