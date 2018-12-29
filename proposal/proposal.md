@@ -37,14 +37,14 @@ Data was collected from [data.gov](https://catalog.data.gov/dataset/college-scor
 
 ### Problem Statement
 
-One of the most pressing issues facing American universities is the number of students who fail to graduate. Nearly one out of five four-year institutions graduate fewer than one-third of its first-time, full-time degree-seeking first-year students within six years. Although there are various explanations for attrition, I will try to identify the most important feature which affects the retention and graduation rates in 4-year institutions.
+One of the most pressing issues facing American universities is the number of students who fail to graduate. Nearly **one out of five** four-year institutions graduate fewer than one-third of its first-time, full-time degree-seeking first-year students within six years. Although there are various explanations for attrition, I will try to identify the most important feature which affects the retention and graduation rates in **4-year institutions.**
 
 We have two target variables:
 
 1. Graduation rate, and
 2. Retention rate
 
-Both are continuous variable so this is a regression task. We will train same regression models for both target variables but the final model will be chosen based on the `r2_score`. It may be the case that one model works good for graduation rate and some other works good for retention rate.
+Both are continuous variable so this is a **regression task.** We will train same regression models for both target variables but the final model will be chosen based on the `r2_score`. It may be the case that one model works good for graduation rate and another one for retention rate.
 
 <a id='data'></a>
 
