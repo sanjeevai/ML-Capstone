@@ -462,13 +462,17 @@ We will use `r2_score` as the metric for performance of our model. `feature_impo
 
 ### Project Design
 
-First method will be using a linear regressor. Before that we will perform the preliminary steps of data preprocessing. We will see the meaning of each variable. Then we will perform feature selection. In this step we will remove the variables which we think are not important for our analysis. Then we will handle null values. There are 2 types of null values: NaNs and "PrivacySuppressed". We will first convert "PrivacySuppressed" to NaN and then perform median imputation method to fill null values. We have categorical variables also. For categorical variable with less than 10 levels, we will create dummy variables. Mainly there are 4 categorical variables. Other categorical variables are just flags which contain two values: 0 and 1.
+First method will be using a linear regressor. Before that we will perform the preliminary steps of data preprocessing. We will see the meaning of each variable. Then we will perform feature selection. In this step we will remove the variables which we think are not important for our analysis.
+
+Then we will handle null values. There are 2 types of null values: NaNs and "PrivacySuppressed". We will first convert "PrivacySuppressed" to NaN and then perform median imputation method to fill null values.
+
+We have categorical variables also. For categorical variable with less than 10 levels, we will create dummy variables. Mainly there are 4 categorical variables. Other categorical variables are just flags which contain two values: 0 and 1.
 
 When identifying the response variable, we have 6 columns to choose from. We will do our study for 4 year full time students. So, this will narrow down our choice to 2 variables: one for graduation rate and other for retention rate.
 
 Now we have our features and targets, we will normalize the data using `StandardScaler`. Then we will perform train-test split with test size of 0.2.
 
-Then we will use the supervised regressors to get the important features. `r2_score` will show the performance of our model. We will use these important features to see the practical importance of these features.
+Then we will use the supervised regressors to get the important features. `r2_score` will show the performance of our model. We will use these important features to see the practical significance of these features.
 
 <a id='refs'></a>
 
