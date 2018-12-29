@@ -40,12 +40,15 @@ Sanjeev Yadav
 
 Supervised learning is one of the most popular areas of machine learning in which much
 development has already taken place. In this project we are trying to identify the university-level
-factors which predict the presence of a strong retention and graduation rate. As the leader of the
+factors which predict the presence of a strong retention and graduation rate.
+
+As the leader of the
 big data revolution, Google gathers information through clicks on the Internet and uses this
 information to personalize advertising to individual users<sup>[[1]](#ref1)</sup>. Previously, machine learning has been used in predicting the retention and graduation rates by using data sets of different US colleges. Student data consisted of two types of information: demographic information of student and transcripts<sup>[[2]](#ref2)</sup>. In fact, it is believed that 50-60% of students entering US colleges intending to major in a **STEM** field ultimately either graduate with a **non-STEM** degree or do not graduate at all<sup>[[3]](#ref3)</sup>.
 
-The link to the data source is [here](https://github.com/sanjeevai/ML-Capstone). Name of the file is data.csv.
-Data was collected from [data.gov](https://catalog.data.gov/dataset/college-scorecard), but for ease of access we have downloaded it and pushed it to this repository.
+The link to the data source is [here](https://github.com/sanjeevai/ML-Capstone/tree/master/data). Name of the file is data.csv.
+
+Data was collected from [data.gov](https://catalog.data.gov/dataset/college-scorecard), but for ease of access we have downloaded it and pushed it here.
 
 <a id='problem'></a>
 

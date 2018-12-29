@@ -47,6 +47,7 @@ We have used **r2 score** as the metric for performance of our model. In statist
 r2 = 1 - RSS/TSS
 
 here:
+
 RSS = sum of squares of difference between actual values(yi) and predicted values(yi^),
 
 TSS = sum of squares of difference between actual values (yi) and mean value (Before applying Regression).
