@@ -54,7 +54,7 @@ The dataset contains 2 csv files. They are:
 
 - data.csv
 
-It contains the input data with 123 variables and 7593 observations. I will create training set and testing set from this data after performing data preprocessing.
+It contains the input data with **123 variables** and **7593 observations**. I will create training set and testing set from this data after performing data preprocessing.
 
 Features:
 
@@ -401,7 +401,7 @@ Completion rate for first-time, full-time students at four-year institutions (15
 
 Completion rate for first-time, full-time students at less-than-four-year institutions (150% of expected time to completion) , pooled in two-year rolling averages and suppressed for small n size
 
-We will be making predictions for 4-year institutions.
+We will be making predictions for **4-year institutions.**
 
 2. For retention rates we have four variables in our data. Let us see the difference between them:
 
@@ -421,16 +421,16 @@ First-time, part-time student retention rate at four-year institutions
 
 First-time, part-time student retention rate at four-year institutions
 
-Retention rate is for full-time students and we are making predictions for 4-year institutions. So, our target variable is **retention_rate.four_year.full_time**.
+Retention rate is for full-time students and we are making predictions for **4-year institutions.** So, our target variable is **retention_rate.four_year.full_time**.
 
-So there are 2 response variables:
+Therefor, our 2 response variables are:
 
 1. **rate_suppressed.four_year**: This follows a normal distribution.
 2. **retention_rate.four_year.full_time**: This follow a left skewed distribution.
 
 - metadata.xlsx
 
-This file contains information about the variables in our input data. It has information about extra variables also, so to improve readability we have highlighted the variables which are in our input data.
+This file contains information about the variables in our input data. It has information about extra variables also, so to improve readability we have **highlighted** the variables which are in our input data.
 
 <a id='sol'></a>
 
