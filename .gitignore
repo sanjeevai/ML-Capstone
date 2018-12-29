@@ -3,3 +3,7 @@
 
 # ipynb checkpoints
 .ipynb_checkpoints/*
+
+# HTML exports of markdown files
+proposal/*.html
+report/*.html
