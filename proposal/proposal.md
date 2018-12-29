@@ -25,7 +25,7 @@ Sanjeev Yadav
 
 Supervised learning is one of the most popular areas of machine learning in which much development has already taken place. In this project I am trying to identify the university-level factors which predict the presence of a strong retention and graduation rate. As the leader of the big data revolution, Google gathers information through clicks on the Internet and uses this information to personalize advertising to individual users<sup>[1]</sup>. Academia will use the same model in the learning process to customize courses right down to the level of the individual. Some companies, such as the nonprofit testing firm ETS, are already harnessing data to develop predetermined learning trees to track certain responses to questions that imply mastery of specific aspects of material, thus allowing educators to organize assignments based on those answers<sup>[1]</sup>. In the United States, universities and colleges face tremendous pressures in terms of their business models, the mobility of students, the growing disillusionment with four-year degrees and the cost of higher education<sup>[1]</sup>. By paying specific attention to important factors, a university can increase its education status.
 
-The link to my data source is [here](https://github.com/sanjeevai/ML_Capstone). The name of the file is data.csv.
+The link to my data source is [here](https://github.com/sanjeevai/ML-Capstone). The name of the file is data.csv.
 
 Data was collected from [data.gov](https://catalog.data.gov/dataset/college-scorecard), but for easy navigation we have pushed it to the GitHub repo.
 
