@@ -2,47 +2,43 @@
 
 ## Machine Learning Capstone
 
-## Project: Factors affecting graduation and retention rates in the U.S. Colleges
+## Project: Factors Affecting Graduation and Retention Rates in the U.S. Colleges
 
 ## Table of Contents
 
-1. [Project Overview](#overview)
-2. [Problem Statement](#statement)
-3. [Metrics](#metrics)
-4. [Files](#files)
-5. [References](#refs)
+- [Project Overview](#overview)
+- [Problem Statement](#statement)
+- [Metrics](#metrics)
+- [Files](#files)
+- [References](#refs)
 
 ***
 
 <a id='overview'></a>
 
-### Project Overview
+## Project Overview
 
 This is the third project in Term 2 of [Machine Learning Engineer Nanodegree](https://in.udacity.com/course/machine-learning-engineer-nanodegree--nd009t) from [Udacity](https://in.udacity.com/). In this project I have used supervised learning techniques to find the most relevant university level factors which affect retention and graduation rates in the U.S. colleges.
 
 <a id='statement'></a>
 
-### Problem Statement
+## Problem Statement
 
 In this problem, we will use supervised learning techniques to determine which university level factors are relevant in affecting the graduation and retention rates in the U.S. colleges. Variable names for graduation and retention rates are explained below:
 
-- For graduation rates:
+- For graduation rates: **C150_4_POOLED_SUPP**
 
-    **C150_4_POOLED_SUPP**
+Completion rate for first-time, full-time students at **four-year institutions** (150% of expected time to completion) , pooled in two-year rolling averages and suppressed for small n (<30) size.
 
-    Completion rate for first-time, full-time students at **four-year institutions** (150% of expected time to completion) , pooled in two-year rolling averages and suppressed for small n (<30) size.
+- For retention rates: **RET_FT4**
 
-- For retention rates:
+First-time, full-time student retention rate at **four-year institutions**.
 
-    **RET_FT4**
-
-    First-time, full-time student retention rate at **four-year institutions**.
-
-These are just the target variables. The feature space consist of **100+ variables.** To know more about them, please see `metadata.xlsx` file.
+These are just the target variables. The feature space consist of **100+ variables.** To know more about them, please see _metadata.xlsx_ file.
 
 <a id='metrics'></a>
 
-### Metrics
+## Metrics
 
 We have used **r2 score** as the metric for performance of our model. In statistics, the coefficient of determination, denoted R2 or r2 and pronounced "R squared", is the proportion of the variance in the dependent variable that is predictable from the independent variable(s)<sup>[[1]](#ref1)</sup>. It provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model<sup>[[2]](#ref2)[[3]](#ref3)[[4]](#ref4)</sup>.
 
@@ -62,7 +58,7 @@ In our problem we have 2 target variables, both continuous and scaled using `Sta
 
 <a id='files'></a>
 
-### Files
+## Files
 
 <pre>
 .
@@ -94,7 +90,7 @@ In our problem we have 2 target variables, both continuous and scaled using `Sta
 
 <a id='refs'></a>
 
-### References
+## References
 
 <a id="ref1"></a>
 
