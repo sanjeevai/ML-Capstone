@@ -948,7 +948,7 @@ Some advantages of Light GBM over other models are:
 
 3. **Better accuracy than any other boosting algorithm:** It produces much more complex trees by following leaf wise split approach rather than a level-wise approach which is the main factor in achieving higher accuracy. However, it can sometimes lead to overfitting which can be avoided by setting the max_depth parameter<sup>[[11]](#ref11)</sup>.
 
-4. **Compatibility with Large Datasets:** It is capable of performing equally good with large datasets with a significant reduction in training time as compared to XGBOOST<sup>[[11]](#ref11)</sup>.
+4. **Compatibility with large datasets:** It is capable of performing equally good with large datasets with a significant reduction in training time as compared to XGBoost<sup>[[11]](#ref11)</sup>.
 
 5. **Parallel learning supported.**
 
