@@ -942,7 +942,7 @@ So why we choose Light GBM as our final model?
 
 Some advantages of Light GBM over other models are:
 
-1. **Faster training speed andhigher efficiency:**  Light GBM use histogram based algorithm i.e it buckets continuous feature values into discrete bins which fasten the training procedure.
+1. **Faster training speed and higher efficiency:**  Light GBM use histogram based algorithm i.e it buckets continuous feature values into discrete bins which fasten the training procedure.
 
 2. **Lower memory usage:** Replaces continuous values to discrete bins which result in lower memory usage.
 
